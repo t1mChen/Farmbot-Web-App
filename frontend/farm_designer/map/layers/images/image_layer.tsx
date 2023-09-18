@@ -3,6 +3,7 @@ import { MapTransformProps } from "../../interfaces";
 import { CameraCalibrationData, DesignerState } from "../../../interfaces";
 import { SpecialStatus, TaggedImage } from "farmbot";
 import { forceOnline } from "../../../../devices/must_be_online";
+import { demoImages } from "../../../../demo/demo_support_framework/supports";
 
 
 import { MapImage } from "./map_image";
@@ -62,7 +63,7 @@ export class ImageLayer extends React.Component<ImageLayerProps> {
     const imageFilterBegin = getFilterValue(StringSetting.photo_filter_begin);
     const imageFilterEnd = getFilterValue(StringSetting.photo_filter_end);
 
-    const demoImages: TaggedImage[] = [
+    const DdemoImages: TaggedImage[] = [
       {
         kind: "Image",
         uuid: "someUniqueIdentifier",
