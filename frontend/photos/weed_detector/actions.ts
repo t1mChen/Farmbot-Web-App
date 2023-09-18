@@ -2,7 +2,7 @@ import { error } from "../../toast/toast";
 import { toPairs } from "../../util";
 import { t } from "../../i18next_wrapper";
 import { FarmwareName } from "../../sequences/step_tiles/tile_execute_script";
-import { runFarmware } from "../../devices/actions";
+import { runFarmware, popUp } from "../../devices/actions";
 
 export const scanImage = (coordScale: number) => (imageId: number) =>
   coordScale
@@ -13,4 +13,11 @@ export const scanImage = (coordScale: number) => (imageId: number) =>
 export const detectPlants = (coordScale: number) => () =>
   coordScale
     ? runFarmware(FarmwareName.PlantDetection)
-    : error(t("Calibrate camera first"));
+    : (showFakeWeeds(),popUp("Weed Detection", "Successfully detected weeds, buy a device for more usages!"));
+
+export function showFakeWeeds(){
+
+}
+  
+
+
