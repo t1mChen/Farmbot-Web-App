@@ -12,6 +12,7 @@ import { flipperImages } from "../../demo/demo_support_framework/supports";
 
 export const PLACEHOLDER_FARMBOT = "/placeholder_farmbot.jpg";
 export const PLACEHOLDER_FARMBOT_DARK = "/placeholder_farmbot_dark.jpg";
+import { forceOnline } from "../../devices/must_be_online";
 
 export const getIndexOfUuid = (images: TaggedImage[], uuid: UUID | undefined) =>
   uuid ? images.map(x => x.uuid).indexOf(uuid) : 0;
@@ -84,7 +85,7 @@ export class ImageFlipper extends
   };
 
   render() {
-	const { images, currentImage } = this.state; 
+	const { images, currentImage } = forceOnline() ? this.state: this.props; 
     const multipleImages = images.length > 1;
     const dark = this.props.id === "fullscreen-flipper";
     return <div className={`image-flipper ${this.props.id}`} id={this.props.id}
@@ -114,15 +115,15 @@ export class ImageFlipper extends
           onClick={this.go(-1)}
           autoFocus={true}
           title={t("previous image")}
-          className="image-flipper-left fb-button">
-          <i className={"fa fa-chevron-left"} />
+          className="image-flipper-right fb-button">
+          <i className={"fa fa-chevron-right"} />
         </button>}
       {multipleImages && !this.state.disableNext &&
         <button
           onClick={this.go(1)}
           title={t("next image")}
-          className="image-flipper-right fb-button">
-          <i className={"fa fa-chevron-right"} />
+          className="image-flipper-left fb-button">
+          <i className={"fa fa-chevron-left"} />
         </button>}
     </div>;
   }
