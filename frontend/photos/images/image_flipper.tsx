@@ -8,10 +8,11 @@ import { FlipperImage } from "./flipper_image";
 import { selectImage, setShownMapImages } from "./actions";
 import { TaggedImage } from "farmbot";
 import { UUID } from "../../resources/interfaces";
-import { demoImages } from "../../demo/demo_support_framework/supports";
+import { flipperImages } from "../../demo/demo_support_framework/supports";
 
 export const PLACEHOLDER_FARMBOT = "/placeholder_farmbot.jpg";
 export const PLACEHOLDER_FARMBOT_DARK = "/placeholder_farmbot_dark.jpg";
+import { forceOnline } from "../../devices/must_be_online";
 
 export const getIndexOfUuid = (images: TaggedImage[], uuid: UUID | undefined) =>
   uuid ? images.map(x => x.uuid).indexOf(uuid) : 0;
@@ -45,8 +46,8 @@ export const PlaceholderImg = (props: PlaceholderImgProps) =>
 
 export class ImageFlipper extends
   React.Component<ImageFlipperProps, ImageFlipperState> {
-  state: ImageFlipperState = { disableNext: false, disablePrev: true, images: demoImages,
-	currentImage: demoImages[0]};
+  state: ImageFlipperState = { disableNext: false, disablePrev: true, images: flipperImages,
+	currentImage: flipperImages[0]};
 
   onImageLoad = (img: HTMLImageElement) => {
     this.props.dispatch({
@@ -68,23 +69,23 @@ export class ImageFlipper extends
     //     ? this.props.flipActionOverride(nextIndex)
     //     : this.props.dispatch(selectNextImage(this.props.images, nextIndex));
     // }
-    const nextIndex = demoImages.indexOf(this.state.currentImage) + increment; 
-	const indexAfterNext = demoImages.indexOf(this.state.currentImage) + 2 * increment; 
-	const tooHigh = (index: number): boolean => index > demoImages.length - 1;
+    const nextIndex = flipperImages.indexOf(this.state.currentImage) + increment; 
+	const indexAfterNext = flipperImages.indexOf(this.state.currentImage) + 2 * increment; 
+	const tooHigh = (index: number): boolean => index > flipperImages.length - 1;
     const tooLow = (index: number): boolean => index < 0;
 
 	if (!tooHigh(nextIndex) && !tooLow(nextIndex)) {
 		this.setState({
 			disableNext: tooHigh(indexAfterNext),
 			disablePrev: tooLow(indexAfterNext),
-			images: demoImages,
-			currentImage: demoImages[nextIndex]
+			images: flipperImages,
+			currentImage: flipperImages[nextIndex]
 		});
 	}
   };
 
   render() {
-	const { images, currentImage } = this.state; 
+	const { images, currentImage } = forceOnline() ? this.state: this.props; 
     const multipleImages = images.length > 1;
     const dark = this.props.id === "fullscreen-flipper";
     return <div className={`image-flipper ${this.props.id}`} id={this.props.id}
@@ -114,15 +115,15 @@ export class ImageFlipper extends
           onClick={this.go(-1)}
           autoFocus={true}
           title={t("previous image")}
-          className="image-flipper-left fb-button">
-          <i className={"fa fa-chevron-left"} />
+          className="image-flipper-right fb-button">
+          <i className={"fa fa-chevron-right"} />
         </button>}
       {multipleImages && !this.state.disableNext &&
         <button
           onClick={this.go(1)}
           title={t("next image")}
-          className="image-flipper-right fb-button">
-          <i className={"fa fa-chevron-right"} />
+          className="image-flipper-left fb-button">
+          <i className={"fa fa-chevron-left"} />
         </button>}
     </div>;
   }
