@@ -28,7 +28,7 @@ export const demoImages: TaggedImage[] = [
 			"attachment_processed_at": "2017-06-03T14:16:55.709Z",
 			"updated_at": "2017-06-03T14:16:55.715Z",
 			"created_at": "2017-06-03T14:15:50.666Z",
-			"attachment_url": "https://i.imgur.com/WsqcMr3.jpeg",
+			"attachment_url": "https://i.imgur.com/LLajqT3.jpeg",
 			"meta": {
 				"x": 150,
 				"y": 100,
@@ -46,7 +46,7 @@ export const demoImages: TaggedImage[] = [
 			"attachment_processed_at": "2017-06-02T14:16:45.899Z",
 			"updated_at": "2017-06-02T14:16:45.903Z",
 			"created_at": "2017-06-02T14:14:22.747Z",
-			"attachment_url": "https://i.imgur.com/EVo6XOU.jpeg",
+			"attachment_url": "https://i.imgur.com/jgZMupJ.jpeg",
 			"meta": {
 				"x": 150,
 				"y": 500,
@@ -64,7 +64,7 @@ export const demoImages: TaggedImage[] = [
 			"attachment_processed_at": "2017-06-01T14:16:34.839Z",
 			"updated_at": "2017-06-01T14:16:34.984Z",
 			"created_at": "2017-06-01T14:14:22.726Z",
-			"attachment_url": "https://i.imgur.com/LLajqT3.jpeg",
+			"attachment_url": "https://i.imgur.com/WsqcMr3.jpeg",
 			"meta": {
 				"x": 150,
 				"y": 900,
@@ -100,7 +100,7 @@ export const demoImages: TaggedImage[] = [
 			"attachment_processed_at": "2017-05-27T14:16:55.709Z",
 			"updated_at": "2017-05-27T14:16:55.715Z",
 			"created_at": "2017-05-27T14:15:50.666Z",
-			"attachment_url": "https://i.imgur.com/Y58tb0q.jpeg",
+			"attachment_url": "https://i.imgur.com/Xou4Ubz.jpeg",
 			"meta": {
 				"x": 550,
 				"y": 500,
@@ -118,7 +118,7 @@ export const demoImages: TaggedImage[] = [
 			"attachment_processed_at": "2017-05-26T14:16:55.709Z",
 			"updated_at": "2017-05-26T14:16:55.715Z",
 			"created_at": "2017-05-26T14:15:50.666Z",
-			"attachment_url": "https://i.imgur.com/Y58tb0q.jpeg",
+			"attachment_url": "https://i.imgur.com/kAmrAZy.jpeg",
 			"meta": {
 				"x": 550,
 				"y": 900,
@@ -136,7 +136,7 @@ export const demoImages: TaggedImage[] = [
 			"attachment_processed_at": "2017-05-25T14:16:55.709Z",
 			"updated_at": "2017-05-25T14:16:55.715Z",
 			"created_at": "2017-05-25T14:15:50.666Z",
-			"attachment_url": "https://i.imgur.com/Y58tb0q.jpeg",
+			"attachment_url": "https://i.imgur.com/emxArQX.jpeg",
 			"meta": {
 				"x": 950,
 				"y": 100,
@@ -154,7 +154,7 @@ export const demoImages: TaggedImage[] = [
 			"attachment_processed_at": "2017-05-21T14:16:55.709Z",
 			"updated_at": "2017-05-21T14:16:55.715Z",
 			"created_at": "2017-05-21T14:15:50.666Z",
-			"attachment_url": "https://i.imgur.com/Y58tb0q.jpeg",
+			"attachment_url": "https://i.imgur.com/U3mBYpG.jpeg",
 			"meta": {
 				"x": 950,
 				"y": 500,
@@ -172,7 +172,7 @@ export const demoImages: TaggedImage[] = [
 			"attachment_processed_at": "2017-05-20T14:16:55.709Z",
 			"updated_at": "2017-05-20T14:16:55.715Z",
 			"created_at": "2017-05-20T14:15:50.666Z",
-			"attachment_url": "https://i.imgur.com/Y58tb0q.jpeg",
+			"attachment_url": "https://i.imgur.com/EVo6XOU.jpeg",
 			"meta": {
 				"x": 950,
 				"y": 900,
