@@ -1,7 +1,7 @@
 import React from "react";
 import { MapTransformProps } from "../../interfaces";
 import { CameraCalibrationData, DesignerState } from "../../../interfaces";
-import { SpecialStatus, TaggedImage } from "farmbot";
+import { TaggedImage } from "farmbot";
 import { forceOnline } from "../../../../devices/must_be_online";
 
 
@@ -14,21 +14,7 @@ import {
   parseFilterSetting, IMAGE_LAYER_CONFIG_KEYS, imageInRange, imageIsHidden,
   filterImagesByType,
 } from "../../../../photos/photo_filter_settings/util";
-
-type Image = {
-  id?: number | undefined;
-  created_at: string;
-  updated_at: string;
-  device_id: number;
-  attachment_processed_at: string | undefined;
-  attachment_url: string;
-  meta: {
-    x: number | undefined;
-    y: number | undefined;
-    z: number | undefined;
-    name?: string;
-  };
-};
+import { demoImages } from "../../../../demo/demo_support_framework/supports";
 
 
 export interface ImageLayerProps {
@@ -60,35 +46,9 @@ export class ImageLayer extends React.Component<ImageLayerProps> {
     const clipImageLayer = !!getConfigValue(BooleanSetting.clip_image_layer);
     const getFilterValue = parseFilterSetting(getConfigValue);
     const imageFilterBegin = getFilterValue(StringSetting.photo_filter_begin);
-    const imageFilterEnd = getFilterValue(StringSetting.photo_filter_end);
-
-    const demoImages: TaggedImage[] = [
-      {
-        kind: "Image",
-        uuid: "someUniqueIdentifier",
-        body: {
-          id: 1,
-          created_at: new Date().toISOString(), 
-          updated_at: new Date().toISOString(),
-          device_id: 12345, 
-          attachment_processed_at: new Date().toISOString(), 
-          attachment_url: "https://hips.hearstapps.com/hmg-prod/images/directly-above-view-of-succulent-plants-at-home-1530023926.jpg",
-          meta: {
-            x: 300,
-            y: 300,
-            z: 1, 
-            name: "Demo Image",
-          },
-        } as Image,
-        specialStatus: SpecialStatus.SAVED
-      },
-    ];
-    
+    const imageFilterEnd = getFilterValue(StringSetting.photo_filter_end); 
 
     const images = forceOnline() ? demoImages : originalImages;
-
-
-    console.log(images);
 
     const hoveredImage: TaggedImage | undefined =
       images.filter(img => img.body.id == hoveredMapImage
