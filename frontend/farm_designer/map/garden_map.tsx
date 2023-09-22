@@ -38,7 +38,7 @@ import { chooseLocation } from "../move_to";
 import { GroupOrder } from "./group_order_visual";
 import { push } from "../../history";
 import { ErrorBoundary } from "../../error_boundary";
-import { TaggedPoint, TaggedPointGroup, PointType, TaggedWeedPointer } from "farmbot";
+import { TaggedPoint, TaggedPointGroup, PointType } from "farmbot";
 import { findGroupFromUrl } from "../../point_groups/group_detail";
 import { pointsSelectedByGroup } from "../../point_groups/criteria";
 import { DrawnWeed } from "./drawn_point/drawn_weed";
@@ -57,9 +57,7 @@ export class GardenMap extends
   state: Partial<GardenMapState> = {};
   constructor(props: GardenMapProps) {
     super(props);
-    this.state = {
-      weedsDemo: weedPointersDemo
-    };
+    this.state = {};
   }
 
   componentDidMount = () => {

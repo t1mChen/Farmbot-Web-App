@@ -298,7 +298,6 @@ export interface GardenMapState {
   selectionBox: SelectionBoxData | undefined;
   previousSelectionBoxArea: number | undefined;
   toLocation: Vector3 | undefined;
-  weedsDemo: TaggedWeedPointer[];
 }
 
 export type PlantOptions = Partial<PlantPointer>;
