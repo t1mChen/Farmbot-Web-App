@@ -38,7 +38,7 @@ import { chooseLocation } from "../move_to";
 import { GroupOrder } from "./group_order_visual";
 import { push } from "../../history";
 import { ErrorBoundary } from "../../error_boundary";
-import { TaggedPoint, TaggedPointGroup, PointType } from "farmbot";
+import { TaggedPoint, TaggedPointGroup, PointType, TaggedWeedPointer } from "farmbot";
 import { findGroupFromUrl } from "../../point_groups/group_detail";
 import { pointsSelectedByGroup } from "../../point_groups/criteria";
 import { DrawnWeed } from "./drawn_point/drawn_weed";
@@ -48,6 +48,7 @@ import { SequenceVisualization } from "./sequence_visualization";
 import { chooseProfile, ProfileLine } from "./profile";
 import { betterCompact } from "../../util";
 import { Path } from "../../internal_urls";
+import { weedPointersDemo } from "../../photos/weed_detector/actions";
 
 const BOUND_KEYS = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
 
@@ -56,7 +57,9 @@ export class GardenMap extends
   state: Partial<GardenMapState> = {};
   constructor(props: GardenMapProps) {
     super(props);
-    this.state = {};
+    this.state = {
+      weedsDemo: weedPointersDemo
+    };
   }
 
   componentDidMount = () => {
@@ -586,7 +589,8 @@ export class GardenMap extends
     boxSelected={this.props.designer.selectedPoints}
     groupSelected={this.groupSelected}
     interactions={this.interactions("Weed")}
-    weeds={this.props.weeds}
+    weeds={weedPointersDemo}
+
     animate={this.animate} />;
   PlantLayer = () => <PlantLayer
     mapTransformProps={this.mapTransformProps}
