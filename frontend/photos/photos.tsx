@@ -32,9 +32,8 @@ import { DevSettings } from "../settings/dev/dev_support";
 import { forceOnline } from "../devices/must_be_online";
 import { initSave } from "../api/crud";
 import { moveMeasureDemo } from "../devices/actions";
-import { demoPos, demoImages } from "../demo/demo_support_framework/supports";
+import { demoPos, demoImages, getImage } from "../demo/demo_support_framework/supports";
 import {GenericPointer } from "farmbot/dist/resources/api_resources";
-import {Xyz} from "farmbot";
 import cloneDeep from 'lodash/cloneDeep';
 
 export class RawDesignerPhotos
@@ -58,7 +57,7 @@ export class RawDesignerPhotos
 	handleMeasure = () => {
 		moveMeasureDemo(10); 
 		setTimeout(()=>moveMeasureDemo(-10), 2000); 
-		setTimeout(()=>demoImages.unshift(cloneDeep(demoImages[this.retrieveIndexOfPhoto(demoPos)])), 2000); 
+		setTimeout(()=>demoImages.unshift(cloneDeep(getImage())), 2000); 
 		const imageZ: number = demoImages[0].body.meta.z || 0; 
 		const body: GenericPointer = {
 			pointer_type: "GenericPointer",
@@ -75,11 +74,6 @@ export class RawDesignerPhotos
 			radius: 100,
 		};
 		setTimeout(() => this.props.dispatch(initSave("Point", body)), 2000);
-	 }
-
-	 retrieveIndexOfPhoto = (pos: Record<Xyz, number | undefined>) => {
-		const id: number = Math.floor(((pos.x||0)+150)/400) * 3 + Math.floor(((pos.y||0)+100)/400) + 1; 
-    return demoImages.indexOf(demoImages.filter(i => i.body.id === id)[0])
 	 }
 
   render() {

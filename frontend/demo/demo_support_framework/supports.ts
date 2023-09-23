@@ -184,6 +184,11 @@ export const demoImages: TaggedImage[] = [
 	},
 ];
 
+export function getImage(): TaggedImage {
+	const id: number = Math.floor(((demoPos.x || 0) + 150) / 400) * 3 + Math.floor(((demoPos.y || 0) + 100) / 400) + 1;
+	return demoImages[demoImages.indexOf(demoImages.filter(i => i.body.id === id)[0])]
+}
+
 export var prevImages = cloneDeep(demoImages);
 
 export function checkUpdate() {
