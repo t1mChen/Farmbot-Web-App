@@ -93,7 +93,6 @@ export class ImageFlipper extends
 				images:demoImages, 
 				currentImage: demoImages[0]
 			})
-			console.log("updated!"); 
 		} 
     return <div className={`image-flipper ${this.props.id}`} id={this.props.id}
       onKeyDown={e => {
