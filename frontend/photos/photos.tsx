@@ -59,6 +59,7 @@ export class RawDesignerPhotos
 		moveMeasureDemo(10); 
 		setTimeout(()=>moveMeasureDemo(-10), 2000); 
 		setTimeout(()=>demoImages.unshift(cloneDeep(demoImages[this.retrieveIndexOfPhoto(demoPos)])), 2000); 
+		const imageZ: number = demoImages[0].body.meta.z || 0; 
 		const body: GenericPointer = {
 			pointer_type: "GenericPointer",
 			name: "SoilHeight Point",
@@ -70,7 +71,7 @@ export class RawDesignerPhotos
 			},
 			x: demoPos.x || 0,
 			y: demoPos.y || 0,
-			z: demoPos.z || 0,
+			z: demoPos.z || 0 - imageZ,
 			radius: 100,
 		};
 		setTimeout(() => this.props.dispatch(initSave("Point", body)), 2000);
