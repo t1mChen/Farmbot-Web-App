@@ -32,8 +32,10 @@ import { DevSettings } from "../settings/dev/dev_support";
 import { forceOnline } from "../devices/must_be_online";
 import { initSave } from "../api/crud";
 import { moveMeasureDemo } from "../devices/actions";
-import { demoPos } from "../demo/demo_support_framework/supports";
+import { demoPos, demoImages } from "../demo/demo_support_framework/supports";
 import {GenericPointer } from "farmbot/dist/resources/api_resources";
+import {Xyz} from "farmbot";
+import cloneDeep from 'lodash/cloneDeep';
 
 export class RawDesignerPhotos
   extends React.Component<DesignerPhotosProps> {
@@ -56,6 +58,7 @@ export class RawDesignerPhotos
 	handleMeasure = () => {
 		moveMeasureDemo(10); 
 		setTimeout(()=>moveMeasureDemo(-10), 2000); 
+		setTimeout(()=>demoImages.unshift(cloneDeep(demoImages[this.retrieveIndexOfPhoto(demoPos)])), 2000); 
 		const body: GenericPointer = {
 			pointer_type: "GenericPointer",
 			name: "SoilHeight Point",
@@ -71,6 +74,11 @@ export class RawDesignerPhotos
 			radius: 100,
 		};
 		setTimeout(() => this.props.dispatch(initSave("Point", body)), 2000);
+	 }
+
+	 retrieveIndexOfPhoto = (pos: Record<Xyz, number | undefined>) => {
+		const id: number = Math.floor(((pos.x||0)+150)/400) * 3 + Math.floor(((pos.y||0)+100)/400) + 1; 
+    return demoImages.indexOf(demoImages.filter(i => i.body.id === id)[0])
 	 }
 
   render() {

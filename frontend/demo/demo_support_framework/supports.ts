@@ -3,6 +3,7 @@ import {
 	TaggedImage,
 	Xyz,
 } from "farmbot";
+import cloneDeep from 'lodash/cloneDeep';
 
 // a local representation of the current status of position
 export const demoPos: Record<Xyz, number | undefined> = {
@@ -183,59 +184,13 @@ export const demoImages: TaggedImage[] = [
 	},
 ];
 
-export const flipperImages: TaggedImage[] = [
-	{
-		"kind": "Image",
-		"specialStatus": SpecialStatus.SAVED,
-		"body": {
-			"id": 7,
-			"device_id": 8,
-			"attachment_processed_at": "2017-05-25T14:16:55.709Z",
-			"updated_at": "2017-05-25T14:16:55.715Z",
-			"created_at": "2017-05-25T14:15:50.666Z",
-			"attachment_url": "https://i.imgur.com/emxArQX.jpeg",
-			"meta": {
-				"x": 950,
-				"y": 100,
-				"z": 164
-			}
-		},
-		"uuid": "Image.6.6"
-	},
-	{
-		"kind": "Image",
-		"specialStatus": SpecialStatus.SAVED,
-		"body": {
-			"id": 8,
-			"device_id": 8,
-			"attachment_processed_at": "2017-05-21T14:16:55.709Z",
-			"updated_at": "2017-05-21T14:16:55.715Z",
-			"created_at": "2017-05-21T14:15:50.666Z",
-			"attachment_url": "https://i.imgur.com/U3mBYpG.jpeg",
-			"meta": {
-				"x": 950,
-				"y": 500,
-				"z": 164
-			}
-		},
-		"uuid": "Image.6.5"
-	},
-	{
-		"kind": "Image",
-		"specialStatus": SpecialStatus.SAVED,
-		"body": {
-			"id": 9,
-			"device_id": 8,
-			"attachment_processed_at": "2017-05-20T14:16:55.709Z",
-			"updated_at": "2017-05-20T14:16:55.715Z",
-			"created_at": "2017-05-20T14:15:50.666Z",
-			"attachment_url": "https://i.imgur.com/EVo6XOU.jpeg",
-			"meta": {
-				"x": 950,
-				"y": 900,
-				"z": 164
-			}
-		},
-		"uuid": "Image.6.4"
-	},
-]
+export var prevImages = cloneDeep(demoImages);
+
+export function checkUpdate() {
+	if (prevImages.length != demoImages.length) {
+		prevImages = cloneDeep(demoImages);
+		return true;
+	} else {
+		return false;
+	}
+}
