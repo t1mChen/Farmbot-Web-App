@@ -6,6 +6,9 @@ import { cameraBtnProps } from "../../photos/capture_settings/camera_selection";
 import { Popover } from "../../ui";
 import { greaterThanTime, recentMsgLog } from "../../wizard/checks";
 import { TakePhotoButtonProps } from "./interfaces";
+import { forceOnline } from "../../devices/must_be_online";
+import { demoImages, getImage } from "../../demo/demo_support_framework/supports";
+import { cloneDeep } from "lodash";
 
 interface TakePhotoButtonState {
   clickedAt: number | undefined;
@@ -43,7 +46,9 @@ export class TakePhotoButton
         camDisabled.class,
       ].join(" ")}
       title={camDisabled.title || t("Take a photo")}
-      onClick={camDisabled.click || sendCommand}>
+      onClick={() => forceOnline() 
+				? demoImages.unshift(cloneDeep(getImage()))
+				: camDisabled.click || sendCommand}>
       {!botOnline &&
         <Popover
           popoverClassName={"help camera-message"}

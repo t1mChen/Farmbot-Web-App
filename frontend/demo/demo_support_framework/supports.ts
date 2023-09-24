@@ -4,6 +4,7 @@ import {
 	TaggedWebcamFeed,
 	Xyz,
 } from "farmbot";
+import cloneDeep from 'lodash/cloneDeep';
 
 // a sample webcam feed for demo
 export const demoWebcamFeed: TaggedWebcamFeed = {
@@ -42,8 +43,8 @@ export const demoImages: TaggedImage[] = [
 			"created_at": "2017-06-03T14:15:50.666Z",
 			"attachment_url": "https://i.imgur.com/LLajqT3.jpeg",
 			"meta": {
-				"x": 150+30,
-				"y": 100+30,
+				"x": 200,
+				"y": 200,
 				"z": 164
 			}
 		},
@@ -58,10 +59,10 @@ export const demoImages: TaggedImage[] = [
 			"attachment_processed_at": "2017-06-02T14:16:45.899Z",
 			"updated_at": "2017-06-02T14:16:45.903Z",
 			"created_at": "2017-06-02T14:14:22.747Z",
-			"attachment_url": "https://i.imgur.com/jgZMupJ.jpeg",
+			"attachment_url": "https://i.imgur.com/EVo6XOU.jpeg",
 			"meta": {
-				"x": 950+30,
-				"y": 900+30,
+				"x": 200,
+				"y": 600,
 				"z": 164
 			}
 		},
@@ -78,8 +79,8 @@ export const demoImages: TaggedImage[] = [
 			"created_at": "2017-06-01T14:14:22.726Z",
 			"attachment_url": "https://i.imgur.com/WsqcMr3.jpeg",
 			"meta": {
-				"x": 150+30,
-				"y": 900+30,
+				"x": 200,
+				"y": 1000,
 				"z": 53
 			}
 		},
@@ -96,8 +97,8 @@ export const demoImages: TaggedImage[] = [
 			"created_at": "2017-05-28T14:15:50.666Z",
 			"attachment_url": "https://i.imgur.com/EudVDLU.jpeg",
 			"meta": {
-				"x": 550+30,
-				"y": 100+30,
+				"x": 600,
+				"y": 200,
 				"z": 164
 			}
 		},
@@ -114,8 +115,8 @@ export const demoImages: TaggedImage[] = [
 			"created_at": "2017-05-27T14:15:50.666Z",
 			"attachment_url": "https://i.imgur.com/Xou4Ubz.jpeg",
 			"meta": {
-				"x": 150+30,
-				"y": 500+30,
+				"x": 600,
+				"y": 600,
 				"z": 164
 			}
 		},
@@ -132,8 +133,8 @@ export const demoImages: TaggedImage[] = [
 			"created_at": "2017-05-26T14:15:50.666Z",
 			"attachment_url": "https://i.imgur.com/kAmrAZy.jpeg",
 			"meta": {
-				"x": 550+30,
-				"y": 900+30,
+				"x": 600,
+				"y": 1000,
 				"z": 164
 			}
 		},
@@ -150,8 +151,8 @@ export const demoImages: TaggedImage[] = [
 			"created_at": "2017-05-25T14:15:50.666Z",
 			"attachment_url": "https://i.imgur.com/emxArQX.jpeg",
 			"meta": {
-				"x": 950+30,
-				"y": 100+30,
+				"x": 1000,
+				"y": 200,
 				"z": 164
 			}
 		},
@@ -168,8 +169,8 @@ export const demoImages: TaggedImage[] = [
 			"created_at": "2017-05-21T14:15:50.666Z",
 			"attachment_url": "https://i.imgur.com/U3mBYpG.jpeg",
 			"meta": {
-				"x": 950+30,
-				"y": 500+30,
+				"x": 1000,
+				"y": 600,
 				"z": 164
 			}
 		},
@@ -184,10 +185,10 @@ export const demoImages: TaggedImage[] = [
 			"attachment_processed_at": "2017-05-20T14:16:55.709Z",
 			"updated_at": "2017-05-20T14:16:55.715Z",
 			"created_at": "2017-05-20T14:15:50.666Z",
-			"attachment_url": "https://i.imgur.com/K3ye6hH.jpeg",
+			"attachment_url": "https://i.imgur.com/jgZMupJ.jpeg",
 			"meta": {
-				"x": 550+30,
-				"y": 500+30,
+				"x": 1000,
+				"y": 1000,
 				"z": 164
 			}
 		},
@@ -195,4 +196,19 @@ export const demoImages: TaggedImage[] = [
 	},
 ];
 
-export const flipperImages: TaggedImage[] = demoImages;
+export function getImage(): TaggedImage {
+	const id: number = Math.floor(((demoPos.x || 0) + 150) / 400) * 3 + Math.floor(((demoPos.y || 0) + 100) / 400) + 1;
+	return demoImages[demoImages.indexOf(demoImages.filter(i => i.body.id === id)[0])]
+}
+
+export var prevImages = cloneDeep(demoImages);
+
+export function checkUpdate() {
+	if (prevImages.length != demoImages.length) {
+		prevImages = cloneDeep(demoImages);
+		return true;
+	} else {
+		return false;
+	}
+}
+
