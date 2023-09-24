@@ -1,9 +1,21 @@
 import {
 	SpecialStatus,
 	TaggedImage,
+	TaggedWebcamFeed,
 	Xyz,
 } from "farmbot";
 import cloneDeep from 'lodash/cloneDeep';
+
+// a sample webcam feed for demo
+export const demoWebcamFeed: TaggedWebcamFeed = {
+	kind: "WebcamFeed",
+	specialStatus: SpecialStatus.SAVED,
+	body: {
+		url: "http://89.26.84.194:5661/mjpg/video.mjpg",
+        name: "demoWebcamFeed",
+	},
+	uuid: "demoWebcamFeed"
+}
 
 // a local representation of the current status of position
 export const demoPos: Record<Xyz, number | undefined> = {
@@ -199,3 +211,4 @@ export function checkUpdate() {
 		return false;
 	}
 }
+
