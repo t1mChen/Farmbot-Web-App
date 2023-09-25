@@ -23,8 +23,6 @@ export interface ImageFlipperProps {
 export interface ImageFlipperState {
 	disablePrev: boolean;
 	disableNext: boolean;
-	images: TaggedImage[];
-	currentImage: TaggedImage;
 }
 
 export interface FlipperImageProps {

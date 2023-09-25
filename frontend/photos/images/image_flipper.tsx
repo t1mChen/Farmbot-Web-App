@@ -8,7 +8,7 @@ import { FlipperImage } from "./flipper_image";
 import { selectImage, setShownMapImages } from "./actions";
 import { TaggedImage } from "farmbot";
 import { UUID } from "../../resources/interfaces";
-import { demoImages, checkUpdate } from "../../demo/demo_support_framework/supports";
+import { demoImages, demoCurrentImage, setCurrentImage, checkUpdate } from "../../demo/demo_support_framework/supports";
 
 export const PLACEHOLDER_FARMBOT = "/placeholder_farmbot.jpg";
 export const PLACEHOLDER_FARMBOT_DARK = "/placeholder_farmbot_dark.jpg";
@@ -46,8 +46,7 @@ export const PlaceholderImg = (props: PlaceholderImgProps) =>
 
 export class ImageFlipper extends
   React.Component<ImageFlipperProps, ImageFlipperState> {
-  state: ImageFlipperState = { disableNext: false, disablePrev: true, images: demoImages,
-	currentImage: demoImages[0]};
+  state: ImageFlipperState = { disableNext: false, disablePrev: true };
 
   onImageLoad = (img: HTMLImageElement) => {
     this.props.dispatch({
@@ -59,39 +58,46 @@ export class ImageFlipper extends
   get uuids() { return this.props.images.map(x => x.uuid); }
 
   go = (increment: -1 | 1) => () => {
-    // const currentImageUuid = this.props.currentImage?.uuid;
-    // const { nextIndex, indexAfterNext } =
-    //   getNextIndexes(this.props.images, currentImageUuid, increment);
-    // const tooHigh = (index: number): boolean => index > this.uuids.length - 1;
-    // const tooLow = (index: number): boolean => index < 0;
-    // if (!tooHigh(nextIndex) && !tooLow(nextIndex)) {
-    //   this.props.flipActionOverride
-    //     ? this.props.flipActionOverride(nextIndex)
-    //     : this.props.dispatch(selectNextImage(this.props.images, nextIndex));
-    // }
-    const nextIndex = demoImages.indexOf(this.state.currentImage) + increment; 
-	const indexAfterNext = demoImages.indexOf(this.state.currentImage) + 2 * increment; 
-	const tooHigh = (index: number): boolean => index > demoImages.length - 1;
-    const tooLow = (index: number): boolean => index < 0;
+		if (forceOnline()) {
+      const nextIndex = demoImages.indexOf(demoCurrentImage) + increment; 
+	    const indexAfterNext = demoImages.indexOf(demoCurrentImage) + 2 * increment; 
+	    const tooHigh = (index: number): boolean => index > demoImages.length - 1;
+      const tooLow = (index: number): boolean => index < 0;
 
-	if (!tooHigh(nextIndex) && !tooLow(nextIndex)) {
-		this.setState({
-			disableNext: tooHigh(indexAfterNext),
-			disablePrev: tooLow(indexAfterNext),
-			images: demoImages,
-			currentImage: demoImages[nextIndex]
-		});
-	}
+	    if (!tooHigh(nextIndex) && !tooLow(nextIndex)) {
+				setCurrentImage(demoImages[nextIndex]); 
+		    this.setState({
+			    disableNext: tooHigh(indexAfterNext),
+			    disablePrev: tooLow(indexAfterNext),
+		    });
+	    } 
+    } else {
+	    const currentImageUuid = this.props.currentImage?.uuid;
+      const { nextIndex, indexAfterNext } =
+      getNextIndexes(this.props.images, currentImageUuid, increment);
+      const tooHigh = (index: number): boolean => index > this.uuids.length - 1;
+      const tooLow = (index: number): boolean => index < 0;
+      if (!tooHigh(nextIndex) && !tooLow(nextIndex)) {
+        this.props.flipActionOverride
+        ? this.props.flipActionOverride(nextIndex)
+        : this.props.dispatch(selectNextImage(this.props.images, nextIndex));
+      }
+      this.setState({
+        disableNext: tooLow(indexAfterNext),
+        disablePrev: tooHigh(indexAfterNext),
+      });
+	  }
   };
 
   render() {
-	const { images, currentImage } = forceOnline() ? this.state: this.props; 
+	  const { images, currentImage } = forceOnline() ? {images: demoImages, currentImage: demoCurrentImage}: this.props; 
     const multipleImages = images.length > 1;
     const dark = this.props.id === "fullscreen-flipper";
 		if (checkUpdate()) {
+			setCurrentImage(demoImages[0]); 
 			this.setState({
-				images:demoImages, 
-				currentImage: demoImages[0]
+				disablePrev: true,
+	      disableNext: false
 			})
 		} 
     return <div className={`image-flipper ${this.props.id}`} id={this.props.id}

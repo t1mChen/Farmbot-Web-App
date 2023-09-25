@@ -12,7 +12,7 @@ export const demoWebcamFeed: TaggedWebcamFeed = {
 	specialStatus: SpecialStatus.SAVED,
 	body: {
 		url: "http://89.26.84.194:5661/mjpg/video.mjpg",
-        name: "demoWebcamFeed",
+		name: "demoWebcamFeed",
 	},
 	uuid: "demoWebcamFeed"
 }
@@ -196,6 +196,12 @@ export const demoImages: TaggedImage[] = [
 	},
 ];
 
+export var demoCurrentImage: TaggedImage = demoImages[0];
+export function setCurrentImage(image: TaggedImage) {
+	demoCurrentImage = image;
+}
+
+// get the image of current position. 
 export function getImage(): TaggedImage {
 	const id: number = Math.floor(((demoPos.x || 0) + 150) / 400) * 3 + Math.floor(((demoPos.y || 0) + 100) / 400) + 1;
 	return demoImages[demoImages.indexOf(demoImages.filter(i => i.body.id === id)[0])]
