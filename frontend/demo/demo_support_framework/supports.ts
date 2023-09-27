@@ -201,10 +201,15 @@ export function setCurrentImage(image: TaggedImage) {
 	demoCurrentImage = image;
 }
 
-// get the image of current position. 
-export function getImage(): TaggedImage {
+// take photo of current position of FarmBot. 
+export function demoTakePhoto(): void {
+	// get image of current position
 	const id: number = Math.floor(((demoPos.x || 0) + 150) / 400) * 3 + Math.floor(((demoPos.y || 0) + 100) / 400) + 1;
-	return demoImages[demoImages.indexOf(demoImages.filter(i => i.body.id === id)[0])]
+	const image = demoImages[demoImages.indexOf(demoImages.filter(i => i.body.id === id)[0])]
+	// push the image to the head of demoImages. 
+	demoImages.unshift(cloneDeep(image));
+	// set image as current image. 
+	demoCurrentImage = demoImages[0];
 }
 
 export var prevImages = cloneDeep(demoImages);

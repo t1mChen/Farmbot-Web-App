@@ -94,7 +94,6 @@ export class ImageFlipper extends
     const multipleImages = images.length > 1;
     const dark = this.props.id === "fullscreen-flipper";
 		if (checkUpdate()) {
-			setCurrentImage(demoImages[0]); 
 			this.setState({
 				disablePrev: true,
 	      disableNext: false
