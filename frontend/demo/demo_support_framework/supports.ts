@@ -1,3 +1,6 @@
+import { success } from "../../toast/toast";
+import { t } from "../../i18next_wrapper";
+
 import {
 	SpecialStatus,
 	TaggedImage,
@@ -210,6 +213,7 @@ export function demoTakePhoto(): void {
 	demoImages.unshift(cloneDeep(image));
 	// set image as current image. 
 	demoCurrentImage = demoImages[0];
+	success(t("Photo Taken"));
 }
 
 export var prevImages = cloneDeep(demoImages);

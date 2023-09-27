@@ -28,6 +28,8 @@ import {
 import {
   GoToThisLocationButton, validGoButtonAxes,
 } from "../../farm_designer/move_to";
+import { forceOnline } from "../../devices/must_be_online";
+import { demoTakePhoto } from "../../demo/demo_support_framework/supports";
 
 const NewPhotoButtons = (props: NewPhotoButtonsProps) => {
   const imageUploadJobProgress = downloadProgress(props.imageJobs[0]);
@@ -42,7 +44,9 @@ const NewPhotoButtons = (props: NewPhotoButtonsProps) => {
       <button
         className={`fb-button green ${camDisabled.class}`}
         title={camDisabled.title}
-        onClick={camDisabled.click || props.takePhoto}>
+        onClick={() => forceOnline() 
+				  ? demoTakePhoto()
+					: camDisabled.click || props.takePhoto}>
         {t("Take Photo")}
       </button>
     </MustBeOnline>
