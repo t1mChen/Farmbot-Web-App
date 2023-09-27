@@ -58,7 +58,7 @@ export class ImageFlipper extends
   get uuids() { return this.props.images.map(x => x.uuid); }
 
   go = (increment: -1 | 1) => () => {
-		if (forceOnline()) {
+		if (forceOnline() && demoCurrentImage) {
       const nextIndex = demoImages.indexOf(demoCurrentImage) + increment; 
 	    const indexAfterNext = demoImages.indexOf(demoCurrentImage) + 2 * increment; 
 	    const tooHigh = (index: number): boolean => index > demoImages.length - 1;

@@ -199,7 +199,7 @@ export const demoImages: TaggedImage[] = [
 	},
 ];
 
-export var demoCurrentImage: TaggedImage = demoImages[0];
+export var demoCurrentImage: TaggedImage | undefined = demoImages[0];
 export function setCurrentImage(image: TaggedImage) {
 	demoCurrentImage = image;
 }
@@ -214,6 +214,22 @@ export function demoTakePhoto(): void {
 	// set image as current image. 
 	demoCurrentImage = demoImages[0];
 	success(t("Photo Taken"));
+}
+
+export function demoDeletePhoto(): void {
+	if (demoCurrentImage) {
+		// get the index of current image. 
+		const i: number = demoImages.indexOf(demoCurrentImage);
+		// remove current image
+		demoImages.splice(i, 1);
+		// 
+		if (demoImages.length > 0) {
+			demoCurrentImage = i < demoImages.length ? demoImages[i] : demoImages[i - 1];
+		} else {
+			demoCurrentImage = undefined;
+		}
+		success(t("Image Deleted."));
+	}
 }
 
 export var prevImages = cloneDeep(demoImages);

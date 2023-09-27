@@ -29,7 +29,7 @@ import {
   GoToThisLocationButton, validGoButtonAxes,
 } from "../../farm_designer/move_to";
 import { forceOnline } from "../../devices/must_be_online";
-import { demoTakePhoto, demoCurrentImage } from "../../demo/demo_support_framework/supports";
+import { demoTakePhoto, demoDeletePhoto, demoCurrentImage } from "../../demo/demo_support_framework/supports";
 
 const NewPhotoButtons = (props: NewPhotoButtonsProps) => {
   const imageUploadJobProgress = downloadProgress(props.imageJobs[0]);
@@ -219,7 +219,9 @@ export class Photos extends React.Component<PhotosProps, PhotosComponentState> {
         movementState={this.props.movementState}
         timeSettings={this.props.timeSettings}>
         <PhotoButtons
-          deletePhoto={this.deletePhoto}
+          deletePhoto={() => forceOnline() 
+						? demoDeletePhoto()
+						: this.deletePhoto}
           toggleCrop={this.toggleCrop}
           toggleRotation={this.toggleRotation}
           toggleFullscreen={this.toggleFullscreen}
