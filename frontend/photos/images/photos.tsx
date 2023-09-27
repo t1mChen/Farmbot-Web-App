@@ -29,7 +29,7 @@ import {
   GoToThisLocationButton, validGoButtonAxes,
 } from "../../farm_designer/move_to";
 import { forceOnline } from "../../devices/must_be_online";
-import { demoTakePhoto } from "../../demo/demo_support_framework/supports";
+import { demoTakePhoto, demoCurrentImage } from "../../demo/demo_support_framework/supports";
 
 const NewPhotoButtons = (props: NewPhotoButtonsProps) => {
   const imageUploadJobProgress = downloadProgress(props.imageJobs[0]);
@@ -44,9 +44,7 @@ const NewPhotoButtons = (props: NewPhotoButtonsProps) => {
       <button
         className={`fb-button green ${camDisabled.class}`}
         title={camDisabled.title}
-        onClick={() => forceOnline() 
-				  ? demoTakePhoto()
-					: camDisabled.click || props.takePhoto}>
+        onClick={camDisabled.click || props.takePhoto}>
         {t("Take Photo")}
       </button>
     </MustBeOnline>
@@ -200,7 +198,9 @@ export class Photos extends React.Component<PhotosProps, PhotosComponentState> {
       <NewPhotoButtons
         syncStatus={this.props.syncStatus}
         botToMqttStatus={this.props.botToMqttStatus}
-        takePhoto={takePhoto}
+        takePhoto={() => forceOnline() 
+					? demoTakePhoto()
+					: takePhoto}
         env={this.props.env}
         imageJobs={this.props.imageJobs} />
       <Overlay isOpen={this.state.fullscreen}
@@ -210,7 +210,7 @@ export class Photos extends React.Component<PhotosProps, PhotosComponentState> {
       </Overlay>
       <this.ImageFlipper id={"panel-flipper"} />
       <PhotoFooter
-        image={this.props.currentImage}
+        image={forceOnline() ? demoCurrentImage : this.props.currentImage}
         botOnline={isBotOnline(this.props.syncStatus, this.props.botToMqttStatus)}
         dispatch={this.props.dispatch}
         arduinoBusy={this.props.arduinoBusy}
@@ -223,8 +223,10 @@ export class Photos extends React.Component<PhotosProps, PhotosComponentState> {
           toggleCrop={this.toggleCrop}
           toggleRotation={this.toggleRotation}
           toggleFullscreen={this.toggleFullscreen}
-          imageUrl={this.props.currentImage?.body.attachment_url}
-          image={this.props.currentImage}
+          imageUrl={forceOnline() 
+						? demoCurrentImage?.body.attachment_url
+						: this.props.currentImage?.body.attachment_url}
+          image={forceOnline() ? demoCurrentImage : this.props.currentImage}
           flags={this.props.flags}
           size={this.props.currentImageSize}
           dispatch={this.props.dispatch}
