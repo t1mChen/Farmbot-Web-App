@@ -94,11 +94,19 @@ export class ImageFlipper extends
     const multipleImages = images.length > 1;
     const dark = this.props.id === "fullscreen-flipper";
 		if (checkUpdate()) {
-			this.setState({
-				disablePrev: true,
-	      disableNext: false
-			})
-		} 
+			if (demoCurrentImage) {
+				const i = demoImages.indexOf(demoCurrentImage); 
+				this.setState({
+					disablePrev: i === 0, 
+					disableNext: i === demoImages.length - 1
+				})
+		  } else {
+				this.setState({
+					disablePrev: false, 
+					disableNext: false
+				})
+			}
+		}
     return <div className={`image-flipper ${this.props.id}`} id={this.props.id}
       onKeyDown={e => {
         if (["ArrowLeft", "ArrowRight"].includes(e.key)) {

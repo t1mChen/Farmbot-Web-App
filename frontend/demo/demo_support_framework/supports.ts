@@ -220,9 +220,9 @@ export function demoDeletePhoto(): void {
 	if (demoCurrentImage) {
 		// get the index of current image. 
 		const i: number = demoImages.indexOf(demoCurrentImage);
-		// remove current image
+		// remove current image. 
 		demoImages.splice(i, 1);
-		// 
+		// set next current image. 
 		if (demoImages.length > 0) {
 			demoCurrentImage = i < demoImages.length ? demoImages[i] : demoImages[i - 1];
 		} else {
