@@ -232,11 +232,21 @@ export function demoDeletePhoto(): void {
 	}
 }
 
+export var currentRotation: number = 0;
+var prevRotation: number = currentRotation
+export function demoToggleRotation(): number {
+	currentRotation = (currentRotation + 90) % 360
+	return currentRotation;
+}
+
 export var prevImages = cloneDeep(demoImages);
 
 export function checkUpdate() {
 	if (prevImages.length != demoImages.length) {
 		prevImages = cloneDeep(demoImages);
+		return true;
+	} else if (prevRotation != currentRotation) {
+		prevRotation = currentRotation;
 		return true;
 	} else {
 		return false;

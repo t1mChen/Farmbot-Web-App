@@ -126,7 +126,8 @@ export class ImageFlipper extends
           hover={this.props.hover}
           onImageLoad={this.onImageLoad}
           dark={dark}
-          image={currentImage} />
+          image={currentImage} 
+					rotation={this.props.rotation}/>
         : <PlaceholderImg textOverlay={Content.NO_IMAGES_YET}
           dark={dark} />}
       {multipleImages && !this.state.disablePrev &&

@@ -18,6 +18,7 @@ export interface ImageFlipperProps {
 	hover?(hovered: string | undefined): void;
 	target?: Record<"x" | "y", number> | undefined;
 	flipActionOverride?(nextIndex: number): void;
+	rotation?: number | undefined;
 }
 
 export interface ImageFlipperState {
@@ -37,6 +38,7 @@ export interface FlipperImageProps {
 	hover?(hovered: string | undefined): void;
 	target?: Record<"x" | "y", number> | undefined;
 	dark?: boolean;
+	rotation?: number | undefined;
 }
 
 export interface FlipperImageState {
