@@ -1,4 +1,4 @@
-import { success } from "../../toast/toast";
+import { success, info } from "../../toast/toast";
 import { t } from "../../i18next_wrapper";
 
 import {
@@ -216,6 +216,7 @@ export function demoTakePhoto(): void {
 	success(t("Photo Taken"));
 }
 
+// delete current photo in flipper
 export function demoDeletePhoto(): void {
 	if (demoCurrentImage) {
 		// get the index of current image. 
@@ -232,21 +233,18 @@ export function demoDeletePhoto(): void {
 	}
 }
 
+// rotate current photo in flipper
 export var currentRotation: number = 0;
-var prevRotation: number = currentRotation
-export function demoToggleRotation(): number {
-	currentRotation = (currentRotation + 90) % 360
-	return currentRotation;
-}
+export function demoToggleRotation(): void { currentRotation = (currentRotation + 90) % 360 }
 
+// placeholder for crop current photo
+export function demoToggleCrop(): void { info(t("Sorry, demo account does not support crop photos")) }
+
+// check if the `demoImages` is updated. 
 export var prevImages = cloneDeep(demoImages);
-
 export function checkUpdate() {
 	if (prevImages.length != demoImages.length) {
 		prevImages = cloneDeep(demoImages);
-		return true;
-	} else if (prevRotation != currentRotation) {
-		prevRotation = currentRotation;
 		return true;
 	} else {
 		return false;
