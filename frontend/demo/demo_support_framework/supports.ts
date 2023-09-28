@@ -1,3 +1,6 @@
+import { success, info } from "../../toast/toast";
+import { t } from "../../i18next_wrapper";
+
 import {
 	SpecialStatus,
 	TaggedImage,
@@ -196,19 +199,49 @@ export const demoImages: TaggedImage[] = [
 	},
 ];
 
-export var demoCurrentImage: TaggedImage = demoImages[0];
+export var demoCurrentImage: TaggedImage | undefined = demoImages[0];
 export function setCurrentImage(image: TaggedImage) {
 	demoCurrentImage = image;
 }
 
-// get the image of current position. 
-export function getImage(): TaggedImage {
+// take photo of current position of FarmBot. 
+export function demoTakePhoto(): void {
+	// get image of current position
 	const id: number = Math.floor(((demoPos.x || 0) + 150) / 400) * 3 + Math.floor(((demoPos.y || 0) + 100) / 400) + 1;
-	return demoImages[demoImages.indexOf(demoImages.filter(i => i.body.id === id)[0])]
+	const image = demoImages[demoImages.indexOf(demoImages.filter(i => i.body.id === id)[0])]
+	// push the image to the head of demoImages. 
+	demoImages.unshift(cloneDeep(image));
+	// set image as current image. 
+	demoCurrentImage = demoImages[0];
+	success(t("Photo Taken"));
 }
 
-export var prevImages = cloneDeep(demoImages);
+// delete current photo in flipper
+export function demoDeletePhoto(): void {
+	if (demoCurrentImage) {
+		// get the index of current image. 
+		const i: number = demoImages.indexOf(demoCurrentImage);
+		// remove current image. 
+		demoImages.splice(i, 1);
+		// set next current image. 
+		if (demoImages.length > 0) {
+			demoCurrentImage = i < demoImages.length ? demoImages[i] : demoImages[i - 1];
+		} else {
+			demoCurrentImage = undefined;
+		}
+		success(t("Image Deleted."));
+	}
+}
 
+// rotate current photo in flipper
+export var currentRotation: number = 0;
+export function demoToggleRotation(): void { currentRotation = (currentRotation + 90) % 360 }
+
+// placeholder for crop current photo
+export function demoToggleCrop(): void { info(t("Sorry, demo account does not support crop photos")) }
+
+// check if the `demoImages` is updated. 
+export var prevImages = cloneDeep(demoImages);
 export function checkUpdate() {
 	if (prevImages.length != demoImages.length) {
 		prevImages = cloneDeep(demoImages);

@@ -7,8 +7,7 @@ import { Popover } from "../../ui";
 import { greaterThanTime, recentMsgLog } from "../../wizard/checks";
 import { TakePhotoButtonProps } from "./interfaces";
 import { forceOnline } from "../../devices/must_be_online";
-import { demoImages, getImage } from "../../demo/demo_support_framework/supports";
-import { cloneDeep } from "lodash";
+import { demoTakePhoto } from "../../demo/demo_support_framework/supports";
 
 interface TakePhotoButtonState {
   clickedAt: number | undefined;
@@ -47,7 +46,7 @@ export class TakePhotoButton
       ].join(" ")}
       title={camDisabled.title || t("Take a photo")}
       onClick={() => forceOnline() 
-				? demoImages.unshift(cloneDeep(getImage()))
+				? demoTakePhoto()
 				: camDisabled.click || sendCommand}>
       {!botOnline &&
         <Popover

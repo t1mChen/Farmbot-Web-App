@@ -58,7 +58,7 @@ export class ImageFlipper extends
   get uuids() { return this.props.images.map(x => x.uuid); }
 
   go = (increment: -1 | 1) => () => {
-		if (forceOnline()) {
+		if (forceOnline() && demoCurrentImage) {
       const nextIndex = demoImages.indexOf(demoCurrentImage) + increment; 
 	    const indexAfterNext = demoImages.indexOf(demoCurrentImage) + 2 * increment; 
 	    const tooHigh = (index: number): boolean => index > demoImages.length - 1;
@@ -94,12 +94,19 @@ export class ImageFlipper extends
     const multipleImages = images.length > 1;
     const dark = this.props.id === "fullscreen-flipper";
 		if (checkUpdate()) {
-			setCurrentImage(demoImages[0]); 
-			this.setState({
-				disablePrev: true,
-	      disableNext: false
-			})
-		} 
+			if (demoCurrentImage) {
+				const i = demoImages.indexOf(demoCurrentImage); 
+				this.setState({
+					disablePrev: i === 0, 
+					disableNext: i === demoImages.length - 1
+				})
+		  } else {
+				this.setState({
+					disablePrev: false, 
+					disableNext: false
+				})
+			}
+		}
     return <div className={`image-flipper ${this.props.id}`} id={this.props.id}
       onKeyDown={e => {
         if (["ArrowLeft", "ArrowRight"].includes(e.key)) {
@@ -119,7 +126,8 @@ export class ImageFlipper extends
           hover={this.props.hover}
           onImageLoad={this.onImageLoad}
           dark={dark}
-          image={currentImage} />
+          image={currentImage} 
+					rotation={this.props.rotation}/>
         : <PlaceholderImg textOverlay={Content.NO_IMAGES_YET}
           dark={dark} />}
       {multipleImages && !this.state.disablePrev &&

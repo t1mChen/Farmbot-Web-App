@@ -32,9 +32,8 @@ import { DevSettings } from "../settings/dev/dev_support";
 import { forceOnline } from "../devices/must_be_online";
 import { initSave } from "../api/crud";
 import { moveMeasureDemo } from "../devices/actions";
-import { demoPos, demoImages, getImage } from "../demo/demo_support_framework/supports";
+import { demoPos, demoImages, demoTakePhoto } from "../demo/demo_support_framework/supports";
 import {GenericPointer } from "farmbot/dist/resources/api_resources";
-import cloneDeep from 'lodash/cloneDeep';
 
 export class RawDesignerPhotos
   extends React.Component<DesignerPhotosProps> {
@@ -57,7 +56,7 @@ export class RawDesignerPhotos
 	handleMeasure = () => {
 		moveMeasureDemo(10); 
 		setTimeout(()=>moveMeasureDemo(-10), 2000); 
-		setTimeout(()=>demoImages.unshift(cloneDeep(getImage())), 2000); 
+		setTimeout(()=>demoTakePhoto(), 2000); 
 		const imageZ: number = demoImages[0].body.meta.z || 0; 
 		const body: GenericPointer = {
 			pointer_type: "GenericPointer",
