@@ -251,3 +251,12 @@ export function checkUpdate() {
 	}
 }
 
+export const demoRenderLabel = (value: number) => {
+	if (value == demoImages.length - 1) { return t("newest"); }
+	if (value == 0) { return t("oldest"); }
+	return "";
+}
+export const demoGetImageIndex = (image: TaggedImage | undefined): number => {
+	if (image) { return demoImages.length - 1 - demoImages.indexOf(image) }
+	else { return 0 }
+}

@@ -30,7 +30,8 @@ import {
 } from "../../farm_designer/move_to";
 import { forceOnline } from "../../devices/must_be_online";
 import { 
-	demoTakePhoto, demoDeletePhoto, demoToggleRotation, currentRotation, demoCurrentImage, demoToggleCrop
+	demoTakePhoto, demoDeletePhoto, demoToggleRotation, currentRotation, 
+	demoCurrentImage, demoToggleCrop, demoRenderLabel, demoGetImageIndex, demoImages
 } from "../../demo/demo_support_framework/supports";
 
 const NewPhotoButtons = (props: NewPhotoButtonsProps) => {
@@ -178,7 +179,7 @@ export class Photos extends React.Component<PhotosProps, PhotosComponentState> {
       env={this.props.env}
       crop={this.state.crop}
       images={this.props.images} 
-			rotation={currentRotation}/>;
+			rotation={forceOnline() ? currentRotation : undefined}/>;
 
   get highestIndex() { return this.props.images.length - 1; }
 
@@ -242,7 +243,18 @@ export class Photos extends React.Component<PhotosProps, PhotosComponentState> {
           canTransform={this.canTransform}
           canCrop={this.canCrop} />
       </PhotoFooter>
-      {this.props.images.length > 1 &&
+      {forceOnline() 
+			  ? demoImages.length > 1 && 
+			  <MarkedSlider 
+				  min={0}
+					max={demoImages.length-1}
+					labelStepSize={Math.max(demoImages.length, 2) - 1} 
+					labelRenderer={demoRenderLabel}
+					value={demoGetImageIndex(demoCurrentImage)}
+					onChange={this.onSliderChange}
+					items={demoImages}
+					itemValue={demoGetImageIndex} />
+				: this.props.images.length > 1 &&
         <MarkedSlider
           min={0}
           max={this.highestIndex}
