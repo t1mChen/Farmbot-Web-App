@@ -88,6 +88,7 @@ export interface PhotoButtonsProps {
 
 export interface NewPhotoButtonsProps {
 	takePhoto(): void;
+	compare?(): void;
 	imageJobs: JobProgress[];
 	env: UserEnv;
 	botToMqttStatus: NetworkState;

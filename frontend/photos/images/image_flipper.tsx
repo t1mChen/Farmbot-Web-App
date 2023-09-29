@@ -8,7 +8,7 @@ import { FlipperImage } from "./flipper_image";
 import { selectImage, setShownMapImages } from "./actions";
 import { TaggedImage } from "farmbot";
 import { UUID } from "../../resources/interfaces";
-import { demoImages, demoCurrentImage, setCurrentImage, checkUpdate } from "../../demo/demo_support_framework/supports";
+import { demoImages, demoCurrentImage, setCurrentImage, checkUpdate, compareList, isComparing } from "../../demo/demo_support_framework/supports";
 
 export const PLACEHOLDER_FARMBOT = "/placeholder_farmbot.jpg";
 export const PLACEHOLDER_FARMBOT_DARK = "/placeholder_farmbot_dark.jpg";
@@ -59,13 +59,15 @@ export class ImageFlipper extends
 
   go = (increment: -1 | 1) => () => {
 		if (forceOnline() && demoCurrentImage) {
-      const nextIndex = demoImages.indexOf(demoCurrentImage) + increment; 
-	    const indexAfterNext = demoImages.indexOf(demoCurrentImage) + 2 * increment; 
-	    const tooHigh = (index: number): boolean => index > demoImages.length - 1;
+			const images = isComparing ? compareList : demoImages; 
+			const currentImage = demoCurrentImage; 
+      const nextIndex = images.indexOf(currentImage) + increment; 
+	    const indexAfterNext = images.indexOf(currentImage) + 2 * increment; 
+	    const tooHigh = (index: number): boolean => index > images.length - 1;
       const tooLow = (index: number): boolean => index < 0;
 
 	    if (!tooHigh(nextIndex) && !tooLow(nextIndex)) {
-				setCurrentImage(demoImages[nextIndex]); 
+				setCurrentImage(images[nextIndex]); 
 		    this.setState({
 			    disableNext: tooHigh(indexAfterNext),
 			    disablePrev: tooLow(indexAfterNext),
@@ -90,22 +92,18 @@ export class ImageFlipper extends
   };
 
   render() {
-	  const { images, currentImage } = forceOnline() ? {images: demoImages, currentImage: demoCurrentImage}: this.props; 
+	  var { images, currentImage } = forceOnline() ? {images: demoImages, currentImage: demoCurrentImage}: this.props; 
+		if (isComparing) { images = compareList }
     const multipleImages = images.length > 1;
     const dark = this.props.id === "fullscreen-flipper";
 		if (checkUpdate()) {
-			if (demoCurrentImage) {
-				const i = demoImages.indexOf(demoCurrentImage); 
+			if (currentImage) {
+				const i = images.indexOf(currentImage); 
 				this.setState({
 					disablePrev: i === 0, 
-					disableNext: i === demoImages.length - 1
+					disableNext: i === images.length - 1
 				})
-		  } else {
-				this.setState({
-					disablePrev: false, 
-					disableNext: false
-				})
-			}
+		  }
 		}
     return <div className={`image-flipper ${this.props.id}`} id={this.props.id}
       onKeyDown={e => {
