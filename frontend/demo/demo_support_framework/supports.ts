@@ -78,9 +78,6 @@ export var compareImages: TaggedImage[] = [
 	},
 ]
 
-// flag to check if comparing photos
-export var isComparing: boolean = false
-
 export var demoCurrentImage: TaggedImage | undefined = demoImages[0];
 export function setCurrentImage(image: TaggedImage) {
 	demoCurrentImage = image;
@@ -141,4 +138,15 @@ export const demoRenderLabel = (value: number) => {
 export const demoGetImageIndex = (image: TaggedImage | undefined): number => {
 	if (image) { return demoImages.length - 1 - demoImages.indexOf(image) }
 	else { return 0 }
+}
+
+// flag to check if comparing photos
+export var isComparing: boolean = false
+export function demoCompare() {
+	if (isComparing) {
+		info(t("Comparing mode exited"));
+	} else {
+		info(t("Comparing photos, click again to exit comparing mode"));
+	}
+	isComparing = !isComparing;
 }

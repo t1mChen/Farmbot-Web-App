@@ -30,8 +30,8 @@ import {
 } from "../../farm_designer/move_to";
 import { forceOnline } from "../../devices/must_be_online";
 import { 
-	demoTakePhoto, demoDeletePhoto, demoToggleRotation, currentRotation, 
-	demoCurrentImage, demoToggleCrop, demoRenderLabel, demoGetImageIndex, demoImages
+	demoTakePhoto, demoDeletePhoto, demoToggleRotation, currentRotation, demoImages, 
+	demoCurrentImage, demoToggleCrop, demoRenderLabel, demoGetImageIndex, isComparing, demoCompare
 } from "../../demo/demo_support_framework/supports";
 
 const NewPhotoButtons = (props: NewPhotoButtonsProps) => {
@@ -50,6 +50,16 @@ const NewPhotoButtons = (props: NewPhotoButtonsProps) => {
         onClick={camDisabled.click || props.takePhoto}>
         {t("Take Photo")}
       </button>
+			{forceOnline() 
+			 ? <button
+			      className={isComparing 
+							? `fb-button red ${camDisabled.class}`
+							: `fb-button green ${camDisabled.class}`}
+			      title={camDisabled.title}
+			      onClick={camDisabled.click || props.compare}>
+			      {isComparing ? t("Comparing") : t("Compare")}
+		    </button>
+			 : undefined }
     </MustBeOnline>
     <p>
       {imageUploadJobProgress &&
@@ -205,6 +215,7 @@ export class Photos extends React.Component<PhotosProps, PhotosComponentState> {
         takePhoto={() => forceOnline() 
 					? demoTakePhoto()
 					: takePhoto}
+				compare={() => demoCompare()}
         env={this.props.env}
         imageJobs={this.props.imageJobs} />
       <Overlay isOpen={this.state.fullscreen}

@@ -92,7 +92,8 @@ export class ImageFlipper extends
   };
 
   render() {
-	  const { images, currentImage } = forceOnline() ? {images: compareImages, currentImage: demoCurrentImage}: this.props; 
+	  var { images, currentImage } = forceOnline() ? {images: demoImages, currentImage: demoCurrentImage}: this.props; 
+		if (isComparing) { images = compareImages }
     const multipleImages = images.length > 1;
     const dark = this.props.id === "fullscreen-flipper";
 		if (checkUpdate()) {
