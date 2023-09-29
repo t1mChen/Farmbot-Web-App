@@ -27,24 +27,6 @@ export const demoPhotos: TaggedImage[] = [
 		"kind": "Image",
 		"specialStatus": SpecialStatus.SAVED,
 		"body": {
-			"id": 10,
-			"device_id": 8,
-			"attachment_processed_at": "2017-06-03T14:16:54.709Z",
-			"updated_at": "2017-06-03T14:16:54.715Z",
-			"created_at": "2017-06-03T14:15:49.666Z",
-			"attachment_url": "https://i.imgur.com/jgZMupJ.jpeg",
-			"meta": {
-				"x": 200,
-				"y": 200,
-				"z": 164
-			}
-		},
-		"uuid": "Image.9.2"
-	},
-	{
-		"kind": "Image",
-		"specialStatus": SpecialStatus.SAVED,
-		"body": {
 			"id": 2,
 			"device_id": 8,
 			"attachment_processed_at": "2017-06-02T14:16:45.899Z",
@@ -184,5 +166,23 @@ export const demoPhotos: TaggedImage[] = [
 			}
 		},
 		"uuid": "Image.6.4"
+	},
+	{
+		"kind": "Image",
+		"specialStatus": SpecialStatus.SAVED,
+		"body": {
+			"id": 10,
+			"device_id": 8,
+			"attachment_processed_at": "2017-06-03T14:16:54.709Z",
+			"updated_at": "2017-06-03T14:16:54.715Z",
+			"created_at": "2017-06-03T14:15:49.666Z",
+			"attachment_url": "https://i.imgur.com/Xou4Ubz.jpeg",
+			"meta": {
+				"x": 200,
+				"y": 200,
+				"z": 164
+			}
+		},
+		"uuid": "Image.9.2"
 	},
 ];

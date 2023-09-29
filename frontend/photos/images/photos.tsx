@@ -254,7 +254,7 @@ export class Photos extends React.Component<PhotosProps, PhotosComponentState> {
           canTransform={this.canTransform}
           canCrop={this.canCrop} />
       </PhotoFooter>
-      {forceOnline() 
+      {forceOnline() && isComparing
 			  ? demoImages.length > 1 && 
 			  <MarkedSlider 
 				  min={0}
