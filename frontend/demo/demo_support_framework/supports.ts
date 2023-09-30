@@ -29,9 +29,10 @@ export const demoPos: Record<Xyz, number | undefined> = {
 };
 
 // limitation of the sample farmbot map
+// fixed incorrect y limitation
 export const map_limit = {
 	x: 2900,
-	y: 1400,
+	y: 1200,
 	z: 400,
 };
 
