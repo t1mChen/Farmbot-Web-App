@@ -9,8 +9,9 @@ import {
 } from "farmbot";
 import cloneDeep from 'lodash/cloneDeep';
 import { demoPhotos } from "./demo_photos";
-import { createPopupOnce } from "../../toast/toast_internal_support";
+import { createPopupOnce, createToastOnce } from "../../toast/toast_internal_support";
 import { adCreatePopupOnceProps } from "../../advertisement/interfaces";
+import { CreateToastOnceProps } from "../../toast/interfaces";
 
 // a sample webcam feed for demo
 export const demoWebcamFeed: TaggedWebcamFeed = {
@@ -138,12 +139,10 @@ export const ad_counter = {
 	POPUP: 15,
 };
 
-const adMessage = (): adCreatePopupOnceProps => ({
+const adMessage = (): CreateToastOnceProps => ({
     message: "Like it? Own a FarmBot right now!!!",
     title: "Buy your own FarmBot",
     color: "yellow",
-	pic: "",
-	hyperlink: "",
     idPrefix: "id-prefix",
     noTimer: true,
     noDismiss: false,
@@ -152,7 +151,7 @@ const adMessage = (): adCreatePopupOnceProps => ({
 export function maybePopupAd(){
 	if(ad_counter.count!=null&&ad_counter.POPUP!=null){
 		if(ad_counter.count%ad_counter.POPUP==0){
-			createPopupOnce(adMessage());
+			createToastOnce(adMessage());
 		}
 		ad_counter.count+=1;
 		
