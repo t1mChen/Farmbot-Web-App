@@ -1,6 +1,7 @@
 import { generateReducer } from "./redux/generate_reducer";
 import { Actions } from "./constants";
 import { ToastMessageProps, ToastMessages } from "./toast/interfaces";
+import { adPopupMessageProps, adPopupMessages } from "./advertisement/interfaces";
 import {
   ControlsState,
   CurvesPanelState,
@@ -25,6 +26,7 @@ export interface AppState {
   sequencesPanelState: SequencesPanelState;
   metricPanelState: MetricPanelState;
   toasts: ToastMessages;
+  adpopups: adPopupMessages;
   movement: MovementState,
   jobs: JobsAndLogsState;
   controls: ControlsState;
@@ -84,6 +86,7 @@ export const emptyState = (): AppState => {
       history: false,
     },
     toasts: {},
+    adpopups: {},
     controls: {
       move: true,
       peripherals: false,
@@ -208,6 +211,10 @@ export const appReducer =
       s.toasts = { ...s.toasts, [payload.id]: payload };
       return s;
     })
+    .add<adPopupMessageProps>(Actions.CREATE_ADPOPUP, (s, { payload }) => {
+      s.adpopups = { ...s.adpopups, [payload.id]: payload };
+      return s;
+    })
     .add<MovementState>(Actions.START_MOVEMENT, (s, { payload }) => {
       s.movement = payload;
       return s;
@@ -218,5 +225,13 @@ export const appReducer =
         .filter(toast => !toast.id.startsWith(payload))
         .map(toast => { newToastLookup[toast.id] = toast; });
       s.toasts = newToastLookup;
+      return s;
+    })
+    .add<string>(Actions.REMOVE_ADPOPUP, (s, { payload }) => {
+      const newadPopupLookup: adPopupMessages = {};
+      Object.values(s.adpopups)
+        .filter(adpopup => !adpopup.id.startsWith(payload))
+        .map(adpopup => { newadPopupLookup[adpopup.id] = adpopup; });
+      s.adpopups = newadPopupLookup;
       return s;
     });

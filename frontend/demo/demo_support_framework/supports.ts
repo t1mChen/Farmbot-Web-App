@@ -9,6 +9,8 @@ import {
 } from "farmbot";
 import cloneDeep from 'lodash/cloneDeep';
 import { demoPhotos } from "./demo_photos";
+import { createPopupOnce } from "../../toast/toast_internal_support";
+import { adCreatePopupOnceProps } from "../../advertisement/interfaces";
 
 // a sample webcam feed for demo
 export const demoWebcamFeed: TaggedWebcamFeed = {
@@ -128,5 +130,32 @@ export function checkUpdate() {
 		return true;
 	} else {
 		return false;
+	}
+}
+
+export const ad_counter = {
+	count: 1,
+	POPUP: 15,
+};
+
+const adMessage = (): adCreatePopupOnceProps => ({
+    message: "Like it? Own a FarmBot right now!!!",
+    title: "Buy your own FarmBot",
+    color: "yellow",
+	pic: "",
+	hyperlink: "",
+    idPrefix: "id-prefix",
+    noTimer: true,
+    noDismiss: false,
+  });
+
+export function maybePopupAd(){
+	if(ad_counter.count!=null&&ad_counter.POPUP!=null){
+		if(ad_counter.count%ad_counter.POPUP==0){
+			createPopupOnce(adMessage());
+		}
+		ad_counter.count+=1;
+		
+		console.log(ad_counter.count);
 	}
 }

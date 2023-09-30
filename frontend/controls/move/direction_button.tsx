@@ -8,7 +8,7 @@ import { Popover } from "../../ui";
 import { setMovementState } from "../../connectivity/log_handlers";
 import { movementPercentRemaining } from "../../farm_designer/move_to";
 import { forceOnline } from "../../devices/must_be_online";
-import {demoPos} from "../../demo/demo_support_framework/supports";
+import {demoPos, maybePopupAd} from "../../demo/demo_support_framework/supports";
 
 export function directionDisabled(props: DirectionButtonProps): boolean {
   const {
@@ -89,6 +89,10 @@ export class DirectionButton
   }
 
   sendCommand = () => {
+      if(forceOnline()){
+        maybePopupAd();
+      }
+
     const { botPosition, locked, axis, arduinoBusy, botOnline } = this.props;
     const buttonId = axis + this.props.direction;
     this.props.setActivePopover(buttonId);
@@ -158,7 +162,7 @@ export class DirectionButton
     var disabled;
     if(forceOnline()){
       disabled = directionDisabled(this.props);
-      console.log(disabled);
+      //console.log(disabled);
     }else{
       disabled = arduinoBusy || !botOnline || directionDisabled(this.props);
     }
