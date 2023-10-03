@@ -139,28 +139,59 @@ export function checkUpdate() {
 export const ad_counter = {
 	count: 1,
 	POPUP: 15,
+	adCount: 1,
 };
 
-const adMessage = (): CreateToastOnceProps => ({
-    message: "Like it? Own a FarmBot right now!!!",
-    title: "Click here to buy one!",
+const adMessageOne = (): CreateToastOnceProps => ({
+    message: "Purchase your FarmBot today",
+    title: "Like it? Own a FarmBot right now!!!",
     color: "purple",
     idPrefix: "id-prefix",
     noTimer: false,
     noDismiss: false,
 	isAd: true,
-  });
+	url: "https://cdn.shopify.com/s/files/1/2040/0289/files/Lights_533748a7-5c48-4d01-97f2-2ceb12975f69_608x352.jpg?v=1527410843",
+});
 
+const adMessageTwo = (): CreateToastOnceProps => ({
+    message: "Why not own a FarmBot today?",
+    title: "Enjoy the experience?",
+    color: "dark-orange",
+    idPrefix: "id-prefix",
+    noTimer: false,
+    noDismiss: false,
+	isAd: true,
+	url: "https://cdn.shopify.com/s/files/1/2040/0289/files/Motors_600x.JPG?6857",
+});
+
+const adMessageThree = (): CreateToastOnceProps => ({
+    message: "Check out the latest models",
+    title: "FarmBot is available!!!",
+    color: "dark-blue",
+    idPrefix: "id-prefix",
+    noTimer: false,
+    noDismiss: false,
+	isAd: true,
+	url: "https://cdn.shopify.com/s/files/1/2040/0289/files/Motors_600x.JPG?6857",
+});
 // pop up ad function
 // when some components are accessed for a certain times
 // display ad
 export function maybePopupAd(){
-	if(ad_counter.count!=null&&ad_counter.POPUP!=null){
-		if(ad_counter.count%ad_counter.POPUP==0){
-			createAdOnce(adMessage());
+	if(ad_counter.count!=null&&ad_counter.POPUP!=null&&ad_counter.adCount!=null){
+		if(ad_counter.count>=ad_counter.POPUP){
+			// rotate through different ads 
+			if(ad_counter.adCount==1){
+				createAdOnce(adMessageOne());
+			}else if(ad_counter.adCount==2){
+				createAdOnce(adMessageTwo());
+			}else{
+				createAdOnce(adMessageThree());
+				ad_counter.adCount = 1;
+			}			
+			ad_counter.count = 0;
+			ad_counter.adCount += 1;
 		}
 		ad_counter.count+=1;
-		
-		console.log(ad_counter.count);
 	}
 }
