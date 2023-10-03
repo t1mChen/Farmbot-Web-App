@@ -9,7 +9,7 @@ import {
 } from "farmbot";
 import cloneDeep from 'lodash/cloneDeep';
 import { demoPhotos } from "./demo_photos";
-import { createToastOnce } from "../../toast/toast_internal_support";
+import { createAdOnce } from "../../toast/toast_internal_support";
 import { CreateToastOnceProps } from "../../toast/interfaces";
 
 // a sample webcam feed for demo
@@ -144,9 +144,9 @@ export const ad_counter = {
 const adMessage = (): CreateToastOnceProps => ({
     message: "Like it? Own a FarmBot right now!!!",
     title: "Click here to buy one!",
-    color: "yellow",
+    color: "purple",
     idPrefix: "id-prefix",
-    noTimer: true,
+    noTimer: false,
     noDismiss: false,
 	isAd: true,
   });
@@ -157,7 +157,7 @@ const adMessage = (): CreateToastOnceProps => ({
 export function maybePopupAd(){
 	if(ad_counter.count!=null&&ad_counter.POPUP!=null){
 		if(ad_counter.count%ad_counter.POPUP==0){
-			createToastOnce(adMessage());
+			createAdOnce(adMessage());
 		}
 		ad_counter.count+=1;
 		

@@ -94,9 +94,21 @@ export const ToastContainer = () =>
       dispatch={store.dispatch} />
   </div>;
 
+export const AdContainer = () =>
+  <div className={"ad-container"}>
+    <Toasts
+      toastMessages={store.getState().app.ads}
+      dispatch={store.dispatch} />
+  </div>;
 
 export const Toasts = (props: ToastsProps) =>
   <div className={"toasts"}>
     {Object.values(props.toastMessages).map(toastProps =>
       <Toast key={toastProps.id} dispatch={props.dispatch} {...toastProps} />)}
+  </div>;
+
+export const Ads = (props: ToastsProps) =>
+  <div className={"ads"}>
+    {Object.values(props.toastMessages).map(adProps =>
+      <Toast key={adProps.id} dispatch={props.dispatch} {...adProps} />)}
   </div>;
