@@ -44,6 +44,13 @@ export class Toast extends React.Component<ToastProps, ToastState> {
     if (this.props.noDismiss) { return; }
     this.setState({ dismissed: true });
     this.detach();
+    if(this.props.isAd){
+      this.displayAd();
+    }
+  };
+  // dismiss the popup and navigate the shop
+  displayAd = () => {
+    window.open("https://farm.bot", '_blank');
   };
 
   render() {
@@ -86,6 +93,7 @@ export const ToastContainer = () =>
       toastMessages={store.getState().app.toasts}
       dispatch={store.dispatch} />
   </div>;
+
 
 export const Toasts = (props: ToastsProps) =>
   <div className={"toasts"}>

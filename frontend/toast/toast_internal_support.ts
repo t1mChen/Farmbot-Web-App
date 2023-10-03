@@ -2,7 +2,6 @@ import { uuid } from "farmbot";
 import { Actions } from "../constants";
 import { store } from "../redux/store";
 import { CreateToastOnceProps } from "./interfaces";
-import { adCreatePopupOnceProps } from "../advertisement/interfaces";
 
 export const createToastOnce = (props: CreateToastOnceProps) => {
   const { message, fallbackLogger } = props;
@@ -19,11 +18,4 @@ export const createToastOnce = (props: CreateToastOnceProps) => {
   }
 };
 
-export const createPopupOnce = (props: adCreatePopupOnceProps) => {
-  setTimeout(() => store.dispatch({
-      type: Actions.CREATE_ADPOPUP, payload: {
-        ...props,
-        id: `${props.idPrefix}-adpopup-${uuid()}`
-      }
-    }));
-};
+

@@ -25,10 +25,12 @@ import {
 import { Highlight } from "../../settings/maybe_highlight";
 import { DeviceSetting } from "../../constants";
 import { Path } from "../../internal_urls";
-import { demoImages } from "../../demo/demo_support_framework/supports";
+import { demoImages, maybePopupAd } from "../../demo/demo_support_framework/supports";
 import { forceOnline } from "../../devices/must_be_online";
 
 export const PhotoFilterSettings = (props: PhotoFilterSettingsProps) => {
+
+  maybePopupAd();
   const { dispatch, flags } = props;
   const {
     alwaysHighlightImage, hideUnShownImages,

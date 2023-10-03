@@ -35,7 +35,7 @@ import { goToFbosSettings } from "../settings/maybe_highlight";
 import { ToastOptions } from "../toast/interfaces";
 import { forceOnline } from "./must_be_online";
 import { store } from "../redux/store";
-import { demoPos, map_limit } from "../demo/demo_support_framework/supports";
+import { demoPos, map_limit, maybePopupAd } from "../demo/demo_support_framework/supports";
 
 const ON = 1, OFF = 0;
 export type ConfigKey = keyof McuParams;
@@ -371,6 +371,7 @@ export function moveRelative(props: MoveRelProps) {
 
 // simulated movement sending no rpc
 export function moveRelativeDemo(props: MoveRelProps) {
+	maybePopupAd();
 	if (demoPos.x !== undefined && demoPos.y !== undefined && demoPos.z !== undefined) {
 		demoPos.x = demoPos.x + props.x;
 		demoPos.y = demoPos.y + props.y;
@@ -381,6 +382,7 @@ export function moveRelativeDemo(props: MoveRelProps) {
 }
 
 export function moveMeasureDemo(step: number) {
+	maybePopupAd();
 	if (demoPos.y !== undefined) {
 		demoPos.y += step;
 	}
@@ -396,6 +398,7 @@ export function moveAbsolute(props: MoveRelProps) {
 }
 
 export function moveAbsoluteDemo(props: MoveRelProps) {
+	maybePopupAd();
 	// check whether a movement is valid
 	const noun = t("Absolute movement");
 	if (props.x < 0 || props.x > map_limit.x ||

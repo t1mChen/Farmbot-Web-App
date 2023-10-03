@@ -9,8 +9,7 @@ import {
 } from "farmbot";
 import cloneDeep from 'lodash/cloneDeep';
 import { demoPhotos } from "./demo_photos";
-import { createPopupOnce, createToastOnce } from "../../toast/toast_internal_support";
-import { adCreatePopupOnceProps } from "../../advertisement/interfaces";
+import { createToastOnce } from "../../toast/toast_internal_support";
 import { CreateToastOnceProps } from "../../toast/interfaces";
 
 // a sample webcam feed for demo
@@ -48,6 +47,7 @@ export function setCurrentImage(image: TaggedImage) {
 
 // take photo of current position of FarmBot. 
 export function demoTakePhoto(): void {
+	maybePopupAd();
 	// get image of current position
 	const id: number = Math.floor(((demoPos.x || 0) + 150) / 400) * 3 + Math.floor(((demoPos.y || 0) + 100) / 400) + 1;
 	const image = demoImages[demoImages.indexOf(demoImages.filter(i => i.body.id === id)[0])]
@@ -60,6 +60,7 @@ export function demoTakePhoto(): void {
 
 // delete current photo in flipper
 export function demoDeletePhoto(): void {
+	maybePopupAd();
 	if (demoCurrentImage) {
 		// get the index of current image. 
 		const i: number = demoImages.indexOf(demoCurrentImage);
@@ -104,6 +105,7 @@ function getCompareList(): TaggedImage[] {
 }
 // Function to swith between normal mode and comparing mode. 
 export function demoCompare() {
+	maybePopupAd();
 	if (isComparing) {
 		info(t("Comparing mode exited"));
 		isComparing = false;
@@ -141,13 +143,17 @@ export const ad_counter = {
 
 const adMessage = (): CreateToastOnceProps => ({
     message: "Like it? Own a FarmBot right now!!!",
-    title: "Buy your own FarmBot",
+    title: "Click here to buy one!",
     color: "yellow",
     idPrefix: "id-prefix",
     noTimer: true,
     noDismiss: false,
+	isAd: true,
   });
 
+// pop up ad function
+// when some components are accessed for a certain times
+// display ad
 export function maybePopupAd(){
 	if(ad_counter.count!=null&&ad_counter.POPUP!=null){
 		if(ad_counter.count%ad_counter.POPUP==0){

@@ -13,6 +13,8 @@ interface CreateToastProps {
   idPrefix?: string;
   noTimer?: boolean;
   noDismiss?: boolean;
+  // add a add for link navigation
+  isAd?: boolean;
 }
 
 export interface CreateToastOnceProps extends CreateToastProps {
