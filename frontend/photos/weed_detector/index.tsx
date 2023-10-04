@@ -90,7 +90,7 @@ export class WeedDetector
         </MustBeOnline>
         <button
           title={t("clear weeds")}
-          onClick={this.clearWeeds}
+          onClick={() => this.clearWeeds()}
           className="fb-button red">
           {this.state.deletionProgress || t("CLEAR WEEDS")}
         </button>

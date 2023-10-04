@@ -49,6 +49,18 @@ export function fakeWeedDemo(): TaggedWeedPointer {
   });
 }
 
+// Function to clear all weeds from the screen
+export function clearWeed() {
+  // Get the number of weeds being cleared
+  const numClearedWeeds = weedPointersDemo.length;
+
+  // Clear the weedPointersDemo array by assigning it an empty array
+  weedPointersDemo = [];
+
+  // Show a pop-up message with the number of cleared weeds
+  popUp("Weed Cleared", `Successfully cleared ${numClearedWeeds} weed(s)`);
+}
+
 function getRandomIntInclusive(min: number, max: number) {
   min = Math.ceil(min);
   max = Math.floor(max);
