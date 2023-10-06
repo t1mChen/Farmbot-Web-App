@@ -9,6 +9,8 @@ import {
 } from "farmbot";
 import cloneDeep from 'lodash/cloneDeep';
 import { demoPhotos } from "./demo_photos";
+import { createAdOnce } from "../../toast/toast_internal_support";
+import { adMessages } from "./demo_ads";
 
 // a sample webcam feed for demo
 export const demoWebcamFeed: TaggedWebcamFeed = {
@@ -46,10 +48,12 @@ export function setCurrentImage(image: TaggedImage) {
 
 // take photo of current position of FarmBot. 
 export function demoTakePhoto(): void {
+	maybePopupAd();
 	if (isComparing) {
 		info(t("Unable to take photos while comparing"));
 		return;
 	}
+
 	// get image of current position
 	const id: number = Math.floor(((demoPos.x || 0) + 150) / 400) * 3 + Math.floor(((demoPos.y || 0) + 100) / 400) + 1;
 	const image = demoImages[demoImages.indexOf(demoImages.filter(i => i.body.id === id)[0])]
@@ -62,10 +66,12 @@ export function demoTakePhoto(): void {
 
 // delete current photo in flipper
 export function demoDeletePhoto(): void {
+	maybePopupAd();
 	if (isComparing) {
 		info(t("Unable to delete photos while comparing"));
 		return;
 	}
+
 	if (demoCurrentImage) {
 		// get the index of current image. 
 		const i: number = demoImages.indexOf(demoCurrentImage);
@@ -112,6 +118,7 @@ function getCompareList(): TaggedImage[] {
 }
 // Function to swith between normal mode and comparing mode. 
 export function demoCompare() {
+	maybePopupAd();
 	if (isComparing) {
 		info(t("Comparing mode exited"));
 		isComparing = false;
@@ -140,4 +147,27 @@ export function checkUpdate() {
 	} else {
 		return false;
 	}
+}
+
+export const ad_counter = {
+	count: 1,
+	POPUP: 15,
+	adCount: 0,
+};
+
+// pop up ad function
+// when some components are accessed for a certain times
+// display ad
+export function maybePopupAd(){
+	if(ad_counter.count!=null&&ad_counter.POPUP!=null&&ad_counter.adCount!=null){
+		if(ad_counter.count>=ad_counter.POPUP){
+			// rotate through different ads 
+			createAdOnce(adMessages[ad_counter.adCount]);		
+			ad_counter.count = 0;
+			ad_counter.adCount += 1;
+			if(ad_counter.adCount>=adMessages.length)
+				ad_counter.adCount = 0;
+			}	
+		}
+		ad_counter.count+=1;
 }
