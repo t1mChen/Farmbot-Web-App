@@ -82,14 +82,14 @@ const maybeNoop = () =>
 		title: t("HarvestX")
 	});
 
-// simple function for when no initial values exist
+// simple function for when no initial values exist demo feature
 const maybeUninitialised = () =>
 	forceOnline() &&
 	info(t("location data uninitialised"), {
 		title: t("Demo Warning")
 	});
 
-// simple function for when a move is valid
+// simple function for when a move is valid demo feature only
 const maybeOutofBound = () =>
 	forceOnline() &&
 	info(t("destination invalid"), {
@@ -381,6 +381,7 @@ export function moveRelativeDemo(props: MoveRelProps) {
 	}
 }
 
+// manipulate demo parameters within demo mode
 export function moveMeasureDemo(step: number) {
 	maybePopupAd();
 	if (demoPos.y !== undefined) {
@@ -397,6 +398,7 @@ export function moveAbsolute(props: MoveRelProps) {
 		.then(maybeNoop, commandErr(noun));
 }
 
+// demo feature for moving displacement data
 export function moveAbsoluteDemo(props: MoveRelProps) {
 	maybePopupAd();
 	// check whether a movement is valid
@@ -502,6 +504,7 @@ export function moveToHome(axis: Axis) {
 		.catch(commandErr(noun));
 }
 
+// demo function return to home
 export function moveToHomeDemo(axis: Axis) {
 	// move back to home if it is valid
 	const noun = t("'Move To Home' command");

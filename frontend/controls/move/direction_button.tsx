@@ -18,6 +18,7 @@ export function directionDisabled(props: DirectionButtonProps): boolean {
   const loc = position || 0;
   const jog = calculateDistance(props);
 
+  // determine demo features control management restrictions
   if(forceOnline()){
     if((loc + jog)<0||(loc+jog)>axisLength){
       return true;
@@ -108,6 +109,7 @@ export class DirectionButton
       }
       return "";
     };
+    // maintain the original movement logic if using real bot
     if (!forceOnline()){
       if (arduinoBusy || !botOnline || locked || directionDisabled(this.props)) {
         this.setState({
@@ -134,6 +136,7 @@ export class DirectionButton
         });
         return;
       }
+      // use demo funtions and data
       this.setState({ popoverOpen: false, popoverText: text() });
       const payload: MoveRelProps = { x: 0, y: 0, z: 0 };
       payload[this.props.axis] = this.distance;
@@ -152,7 +155,7 @@ export class DirectionButton
     const demop = demoPos;
     const title = `${t("move {{axis}} axis", { axis })} (${this.distance})`;
     var remaining;
-    // check demo properties
+    // check demo properties and load data
     if(forceOnline()){
       remaining = movementPercentRemaining(demop, movementState);
     }else{
@@ -160,6 +163,7 @@ export class DirectionButton
     }
     const style = calcBtnStyle(direction, remaining);
     var disabled;
+    // neglect other restrictions if in demo
     if(forceOnline()){
       disabled = directionDisabled(this.props);
       //console.log(disabled);

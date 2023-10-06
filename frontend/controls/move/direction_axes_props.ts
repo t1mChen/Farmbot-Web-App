@@ -40,7 +40,7 @@ export function buildDirectionProps(props: DirectionAxesProps) {
   const { firmwareSettings, getConfigValue } = props;
   var {botPosition} = props;
   var lengths = calculateAxialLengths(props);
-
+  // use the demo parameters if not controlling actual bot
   if (forceOnline()){
     botPosition = demoPos;
     lengths = map_limit;
