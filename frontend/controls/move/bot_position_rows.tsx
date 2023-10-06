@@ -34,6 +34,7 @@ export const BotPositionRows = (props: BotPositionRowsProps) => {
   const { locationData, getConfigValue, arduinoBusy, locked } = props;
   const hardwareDisabled = disabledAxisMap(props.firmwareSettings);
   var commonAxisActionProps;
+  // inject demo data if under demo interface
   if(forceOnline()){
     commonAxisActionProps = {
       botOnline: props.botOnline,
@@ -43,6 +44,7 @@ export const BotPositionRows = (props: BotPositionRowsProps) => {
       botPosition: demoPos,
       sourceFwConfig: props.sourceFwConfig,
     };
+    // maintain orginal logic
   }else{
   commonAxisActionProps = {
     botOnline: props.botOnline,
@@ -56,7 +58,7 @@ export const BotPositionRows = (props: BotPositionRowsProps) => {
     || (hasEncoders(props.firmwareHardware) &&
       (getConfigValue(BooleanSetting.scaled_encoders)
         || getConfigValue(BooleanSetting.raw_encoders)));
-
+// original logic
   if(!forceOnline()){
   return <div className={"bot-position-rows"}>
     <div className={"axis-titles"}>
@@ -108,6 +110,7 @@ export const BotPositionRows = (props: BotPositionRowsProps) => {
       disabled={arduinoBusy} />
   </div>;
   }
+  // when it demo, execute customised functions with demo data
   return <div className={"bot-position-rows"}>
     <div className={"axis-titles"}>
       <Row>
