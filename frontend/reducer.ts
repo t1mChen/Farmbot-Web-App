@@ -103,6 +103,7 @@ export const emptyState = (): AppState => {
       controls: false,
       jobs: false,
       connectivity: false,
+      feedback: false,
     },
     hotkeyGuide: false,
   };
