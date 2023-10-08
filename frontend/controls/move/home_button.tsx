@@ -10,7 +10,7 @@ import {
   disabledAxisMap,
 } from "../../settings/hardware_settings/axis_tracking_status";
 import { forceOnline } from "../../devices/must_be_online";
-import { demoPos } from "../../demo/demo_support_framework/supports";
+import { demoPos, maybePopupAd } from "../../demo/demo_support_framework/supports";
 
 export const HomeButton = (props: HomeButtonProps) => {
   const { doFindHome, homeDirection, locked, arduinoBusy, botOnline } = props;
@@ -28,7 +28,9 @@ export const HomeButton = (props: HomeButtonProps) => {
   const [popoverText, setPopoverText] = React.useState("");
   const sendCommand = () => {
     props.setActivePopover(icon);
+    // movement state in demo and advertisement count
     if(forceOnline()){
+      maybePopupAd();
       props.dispatch(setMovementStateFromPosition(demoPos));
     }else{
       props.dispatch(setMovementStateFromPosition(props.botPosition));
