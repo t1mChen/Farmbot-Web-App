@@ -89,9 +89,10 @@ describe("moveAbsoluteDemo", () => {
     // Call the function to move the bot
     moveAbsoluteDemo({ x: 100, y: 100, z: 0 });
 
-    // Check if the bot's position is updated to (100, 100)
+    // Check if the bot's position is updated to (100, 100, 0)
     expect(demoPos.x).toBe(100);
     expect(demoPos.y).toBe(100);
+    expect(demoPos.z).toBe(0);
   });
 });
 
