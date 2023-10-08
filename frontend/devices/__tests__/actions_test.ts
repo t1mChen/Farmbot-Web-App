@@ -58,6 +58,42 @@ import { edit, save } from "../../api/crud";
 import { DeepPartial } from "redux";
 import { Farmbot } from "farmbot";
 import { goToFbosSettings } from "../../settings/maybe_highlight";
+import { demoPos } from "../../demo/demo_support_framework/supports";
+import { moveAbsoluteDemo, moveRelativeDemo } from "../actions";
+import { MoveRelProps } from "../../devices/interfaces";
+
+// to run this test, use "sudo docker compose run web npx jest frontend/devices/__tests__/actions_test.ts"
+
+describe("moveRelativeDemo", () => {
+  it("moves the bot relatively in demo mode", async () => {
+    // Call the function to move the bot
+    const payload: MoveRelProps = { x: 10, y: 10, z: 0 };
+    moveRelativeDemo(payload);
+
+    // Check if the bot's position is updated to (10, 10)
+    expect(demoPos.x).toBe(10);
+    expect(demoPos.y).toBe(10);
+    expect(demoPos.z).toBe(0);
+  });
+});
+
+describe("moveAbsoluteDemo", () => {
+  it("moves the bot to position (100, 100) in demo mode", () => {
+    // Mock the getDevice function if it makes actual device calls.
+    jest.mock("../../device", () => ({
+      getDevice: jest.fn().mockReturnValue({
+        moveAbsolute: jest.fn()
+      })
+    }));
+
+    // Call the function to move the bot
+    moveAbsoluteDemo({ x: 100, y: 100, z: 0 });
+
+    // Check if the bot's position is updated to (100, 100)
+    expect(demoPos.x).toBe(100);
+    expect(demoPos.y).toBe(100);
+  });
+});
 
 const replaceDeviceWith = async (d: DeepPartial<Farmbot>, cb: Function) => {
   jest.clearAllMocks();
