@@ -30,8 +30,8 @@ import {
 } from "../../farm_designer/move_to";
 import { forceOnline } from "../../devices/must_be_online";
 import { 
-	demoTakePhoto, demoDeletePhoto, demoToggleRotation, currentRotation, demoImages, 
-	demoCurrentImage, demoToggleCrop, demoRenderLabel, demoGetImageIndex, isComparing, demoCompare
+	demoTakePhoto, demoDeletePhoto, demoToggleRotation, currentRotation, demoCurrentImage, 
+	demoToggleCrop, demoRenderLabel, demoGetImageIndex, isComparing, demoCompare, compareList
 } from "../../demo/demo_support_framework/supports";
 
 const NewPhotoButtons = (props: NewPhotoButtonsProps) => {
@@ -255,15 +255,15 @@ export class Photos extends React.Component<PhotosProps, PhotosComponentState> {
           canCrop={this.canCrop} />
       </PhotoFooter>
       {forceOnline() && isComparing
-			  ? demoImages.length > 1 && 
+			  ? compareList.length > 1 && 
 			  <MarkedSlider 
 				  min={0}
-					max={demoImages.length-1}
-					labelStepSize={Math.max(demoImages.length, 2) - 1} 
+					max={compareList.length-1}
+					labelStepSize={Math.max(compareList.length, 2) - 1} 
 					labelRenderer={demoRenderLabel}
 					value={demoGetImageIndex(demoCurrentImage)}
 					onChange={this.onSliderChange}
-					items={demoImages}
+					items={compareList}
 					itemValue={demoGetImageIndex} />
 				: this.props.images.length > 1 &&
         <MarkedSlider
