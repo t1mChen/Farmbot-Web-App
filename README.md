@@ -41,3 +41,10 @@ Check docs/HarvestX-Deployment_Guide-151023-095140.pdf
 see ["releases"](https://github.com/Reesedog/Farmbot-Web-App/releases)
 
 and docs/HarvestX-Changelog-151023-100106.pdf
+
+
+## Traceability Matrix
+
+Checkout tests/ folder
+
+To be updated and uploaded
