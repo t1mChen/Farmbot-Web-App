@@ -152,15 +152,20 @@ export function checkUpdate() {
 export const ad_counter = {
 	count: 1,
 	// present ver ad
-	POPUP: 1,
+	POPUP: 100000,
 	adCount: 0,
 };
 
+export const ad_counter_2 = {
+	count: 1,
+	// present ver ad
+	POPUP: 1,
+	adCount: 0,
+};
 // pop up ad function
 // when some components are accessed for a certain times
 // display ad
 export function maybePopupAd(){
-	return; 
 	if(ad_counter.count!=null&&ad_counter.POPUP!=null&&ad_counter.adCount!=null){
 		if(ad_counter.count>=ad_counter.POPUP){
 			// rotate through different ads 
@@ -175,15 +180,15 @@ export function maybePopupAd(){
 }
 
 export function maybePopupAd2(){
-	if(ad_counter.count!=null&&ad_counter.POPUP!=null&&ad_counter.adCount!=null){
-		if(ad_counter.count>=ad_counter.POPUP){
+	if(ad_counter_2.count!=null&&ad_counter_2.POPUP!=null&&ad_counter_2.adCount!=null){
+		if(ad_counter_2.count>=ad_counter_2.POPUP){
 			// rotate through different ads 
-			createAdOnce(adMessages[ad_counter.adCount]);		
-			ad_counter.count = 0;
-			ad_counter.adCount += 1;
-			if(ad_counter.adCount>=adMessages.length)
-				ad_counter.adCount = 0;
+			createAdOnce(adMessages[ad_counter_2.adCount]);		
+			ad_counter_2.count = 0;
+			ad_counter_2.adCount += 1;
+			if(ad_counter_2.adCount>=adMessages.length)
+			ad_counter_2.adCount = 0;
 			}	
 		}
-		ad_counter.count+=1;
+		ad_counter_2.count+=1;
 }
