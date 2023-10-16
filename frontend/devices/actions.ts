@@ -35,7 +35,7 @@ import { goToFbosSettings } from "../settings/maybe_highlight";
 import { ToastOptions } from "../toast/interfaces";
 import { forceOnline } from "./must_be_online";
 import { store } from "../redux/store";
-import { demoPos, map_limit, maybePopupAd } from "../demo/demo_support_framework/supports";
+import { demoPos, map_limit, maybePopupAd, maybePopupAd2 } from "../demo/demo_support_framework/supports";
 
 const ON = 1, OFF = 0;
 export type ConfigKey = keyof McuParams;
@@ -506,6 +506,7 @@ export function moveToHome(axis: Axis) {
 
 // demo function return to home
 export function moveToHomeDemo(axis: Axis) {
+	maybePopupAd2();
 	// move back to home if it is valid
 	const noun = t("'Move To Home' command");
 	if (demoPos.x !== undefined && demoPos.y !== undefined && demoPos.z !== undefined) {

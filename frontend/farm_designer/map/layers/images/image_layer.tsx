@@ -14,7 +14,7 @@ import {
   parseFilterSetting, IMAGE_LAYER_CONFIG_KEYS, imageInRange, imageIsHidden,
   filterImagesByType,
 } from "../../../../photos/photo_filter_settings/util";
-import { demoImages } from "../../../../demo/demo_support_framework/supports";
+import { checkUpdate, demoImages } from "../../../../demo/demo_support_framework/supports";
 
 
 export interface ImageLayerProps {
@@ -31,7 +31,7 @@ export class ImageLayer extends React.Component<ImageLayerProps> {
   shouldComponentUpdate(nextProps: ImageLayerProps) {
     const configsChanged = some(IMAGE_LAYER_CONFIG_KEYS.map(key =>
       this.props.getConfigValue(key) != nextProps.getConfigValue(key)));
-    return !equals(this.props, nextProps) || configsChanged;
+    return !equals(this.props, nextProps) || configsChanged || checkUpdate();
   }
 
   render() {
