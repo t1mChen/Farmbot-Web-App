@@ -8,7 +8,7 @@ import {
 	Xyz,
 } from "farmbot";
 import cloneDeep from 'lodash/cloneDeep';
-import { demoPhotos } from "./demo_photos";
+import { demoPhotos, demoPresentPhotos } from "./demo_photos";
 import { createAdOnce } from "../../toast/toast_internal_support";
 import { adMessages } from "./demo_ads";
 
@@ -54,9 +54,17 @@ export function demoTakePhoto(): void {
 		return;
 	}
 
-	// get image of current position
+	// get image of current position. 
 	const id: number = Math.floor(((demoPos.x || 0) + 150) / 400) * 3 + Math.floor(((demoPos.y || 0) + 100) / 400) + 1;
-	const image = demoImages[demoImages.indexOf(demoImages.filter(i => i.body.id === id)[0])]
+	const image = demoPresentPhotos[id - 1];
+	// get and format current time. 
+	const currentTime = new Date();
+	const formattedTime = `${currentTime.getFullYear()}-` +
+		`${(currentTime.getMonth() + 1).toString().padStart(2, '0')}-` +
+		`${(currentTime.getDate()).toString().padStart(2, '0')}` +
+		`T${currentTime.toLocaleTimeString()}`;
+	// set current time for the image taken. 
+	image.body.created_at = formattedTime;
 	// push the image to the head of demoImages. 
 	demoImages.unshift(cloneDeep(image));
 	// set image as current image. 
@@ -165,18 +173,18 @@ export const ad_counter_2 = {
 // pop up ad function
 // when some components are accessed for a certain times
 // display ad
-export function maybePopupAd(){
-	if(ad_counter.count!=null&&ad_counter.POPUP!=null&&ad_counter.adCount!=null){
-		if(ad_counter.count>=ad_counter.POPUP){
+export function maybePopupAd() {
+	if (ad_counter.count != null && ad_counter.POPUP != null && ad_counter.adCount != null) {
+		if (ad_counter.count >= ad_counter.POPUP) {
 			// rotate through different ads 
-			createAdOnce(adMessages[ad_counter.adCount]);		
+			createAdOnce(adMessages[ad_counter.adCount]);
 			ad_counter.count = 0;
 			ad_counter.adCount += 1;
-			if(ad_counter.adCount>=adMessages.length)
+			if (ad_counter.adCount >= adMessages.length)
 				ad_counter.adCount = 0;
-			}	
 		}
-		ad_counter.count+=1;
+	}
+	ad_counter.count += 1;
 }
 
 export function maybePopupAd2(){
