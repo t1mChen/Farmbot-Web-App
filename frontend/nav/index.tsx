@@ -276,11 +276,9 @@ export class NavBar extends React.Component<NavBarProps, Partial<NavBarState>> {
       device: this.props.device,
       apiFirmwareValue: this.props.apiFirmwareValue,
     });
-    const { sync_status } = this.props.bot.hardware.informational_settings;
-    const click = this.togglePopup("feedback");
 
     var isOpen = false;
-    const onClick = () => { isOpen = !isOpen }
+    const onClick = () => { isOpen = !isOpen}
     return <div className={"connection-status-popover nav-popup-button-wrapper"}>
       <ErrorBoundary>
         <Popover position={Position.BOTTOM_RIGHT}
