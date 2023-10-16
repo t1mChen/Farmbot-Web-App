@@ -270,6 +270,7 @@ export class NavBar extends React.Component<NavBarProps, Partial<NavBarState>> {
       lastSeen={lastSeenNumber({ bot: this.props.bot, device: this.props.device })}
       botOnline={isBotOnlineFromState(this.props.bot)} />;
 
+  // add nav button for feedback, no need for input
   Feedback = () => {
     const data = connectivityData({
       bot: this.props.bot,
