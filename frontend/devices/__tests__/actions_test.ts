@@ -64,7 +64,7 @@ import { MoveRelProps } from "../../devices/interfaces";
 
 // to run this test, use "sudo docker compose run web npx jest frontend/devices/__tests__/actions_test.ts"
 
-import { moveToHomeDemo } from "../../devices/actions"; // 路径根据实际情况调整
+import { moveToHomeDemo } from "../../devices/actions";
 import { getDevice } from "../../device";
 
 describe("moveToHomeDemo", () => {
