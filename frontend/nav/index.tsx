@@ -204,6 +204,12 @@ export class NavBar extends React.Component<NavBarProps, Partial<NavBarState>> {
       : <div style={{ display: "inline" }} />;
   };
 
+  TakeAGuidedTour = () => {
+    return <a className={"tour-button"} onClick={() => push(Path.tours())}>
+        Take A Guided Tour
+      </a>
+  };
+  
   JobsButton = () => {
     const sortedJobs = sortJobs(this.props.bot.hardware.jobs).active;
     const jobActive = sortedJobs.length > 0;
@@ -320,6 +326,7 @@ export class NavBar extends React.Component<NavBarProps, Partial<NavBarState>> {
                       <this.EstopButton />
                       <this.ConnectionStatus />
                       <this.Feedback />
+                      <this.TakeAGuidedTour />
                       <this.SetupButton />
                       <this.JobsButton />
                       <this.Coordinates />
