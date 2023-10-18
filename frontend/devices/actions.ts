@@ -70,7 +70,7 @@ export const commandOK = (noun = "Command", message?: string) => () => {
 	success(msg, { title: t("Request sent") });
 };
 
-const popUp = (title: string, message: string) =>
+export const popUp = (title: string, message: string) =>
 	forceOnline() &&
 	info(t(message), {
 		title: t(title)
