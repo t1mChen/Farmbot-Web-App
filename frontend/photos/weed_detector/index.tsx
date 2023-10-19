@@ -83,7 +83,8 @@ export class WeedDetector
             className={`fb-button green ${camDisabled.class}`}
             title={camDisabled.title}
             onClick={camDisabled.click ||
-              detectPlants(wDEnvGet("CAMERA_CALIBRATION_coord_scale"))}>
+              detectPlants(wDEnvGet("CAMERA_CALIBRATION_coord_scale"))}
+            >
             {t("detect weeds")}
           </button>
         </MustBeOnline>
