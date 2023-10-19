@@ -33,7 +33,9 @@ import { Actions } from "../constants";
 import { PopupsState } from "../interfaces";
 import { Panel, TAB_ICON } from "../farm_designer/panel_header";
 import { movementPercentRemaining } from "../farm_designer/move_to";
-import {demoPos} from "../demo/demo_support_framework/supports";
+import { demoPos } from "../demo/demo_support_framework/supports";
+import { variableFormList } from "../sequences/locals_list/variable_form_list";
+import { Feedback } from "./feedback";
 
 export class NavBar extends React.Component<NavBarProps, Partial<NavBarState>> {
   state: NavBarState = {
@@ -74,9 +76,9 @@ export class NavBar extends React.Component<NavBarProps, Partial<NavBarState>> {
     const isOpen = this.props.appState.popups.controls;
     // read from simulated position if in demo
     var current;
-    if(forceOnline()){
+    if (forceOnline()) {
       current = demoPos;
-    }else{
+    } else {
       current = validBotLocationData(hardware.location_data).position;
     }
     const movementState = this.props.appState.movement;
@@ -202,6 +204,12 @@ export class NavBar extends React.Component<NavBarProps, Partial<NavBarState>> {
       : <div style={{ display: "inline" }} />;
   };
 
+  TakeAGuidedTour = () => {
+    return <a className={"tour-button"} onClick={() => push(Path.tours())}>
+        Take A Guided Tour
+      </a>
+  };
+  
   JobsButton = () => {
     const sortedJobs = sortJobs(this.props.bot.hardware.jobs).active;
     const jobActive = sortedJobs.length > 0;
@@ -268,6 +276,31 @@ export class NavBar extends React.Component<NavBarProps, Partial<NavBarState>> {
       lastSeen={lastSeenNumber({ bot: this.props.bot, device: this.props.device })}
       botOnline={isBotOnlineFromState(this.props.bot)} />;
 
+  // add nav button for feedback, no need for input
+  Feedback = () => {
+    const data = connectivityData({
+      bot: this.props.bot,
+      device: this.props.device,
+      apiFirmwareValue: this.props.apiFirmwareValue,
+    });
+
+    var isOpen = false;
+    const onClick = () => { isOpen = !isOpen}
+    return <div className={"connection-status-popover nav-popup-button-wrapper"}>
+      <ErrorBoundary>
+        <Popover position={Position.BOTTOM_RIGHT}
+          target={<div className={`connectivity-button ${isOpen ? "hover" : ""}`}
+            onClick={onClick}>
+            <div> 📝</div>
+            {window.innerWidth > 450 && <p>{t("Feedback")}</p>}
+          </div>}
+          content={<Feedback />} />
+
+      </ErrorBoundary>
+    </div>;
+  }
+
+
   render() {
     /** Change document meta title on every route change. */
     updatePageInfo(Path.getSlug(Path.app()), Path.getSlug(Path.designer()));
@@ -292,6 +325,8 @@ export class NavBar extends React.Component<NavBarProps, Partial<NavBarState>> {
                       <this.AccountMenu />
                       <this.EstopButton />
                       <this.ConnectionStatus />
+                      <this.Feedback />
+                      <this.TakeAGuidedTour />
                       <this.SetupButton />
                       <this.JobsButton />
                       <this.Coordinates />

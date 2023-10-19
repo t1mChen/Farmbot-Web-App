@@ -29,6 +29,11 @@ import { FarmwareForm } from "../farmware/farmware_forms";
 import { BooleanSetting } from "../session_keys";
 import { maybeOpenPanel } from "../settings/maybe_highlight";
 import { DevSettings } from "../settings/dev/dev_support";
+import { forceOnline } from "../devices/must_be_online";
+import { initSave } from "../api/crud";
+import { moveMeasureDemo } from "../devices/actions";
+import { demoPos, demoImages, demoTakePhoto } from "../demo/demo_support_framework/supports";
+import {GenericPointer } from "farmbot/dist/resources/api_resources";
 
 export class RawDesignerPhotos
   extends React.Component<DesignerPhotosProps> {
@@ -47,6 +52,28 @@ export class RawDesignerPhotos
       size: this.props.currentImageSize,
     });
   }
+
+	handleMeasure = () => {
+		moveMeasureDemo(10); 
+		setTimeout(()=>moveMeasureDemo(-10), 2000); 
+		setTimeout(()=>demoTakePhoto(), 2000); 
+		const imageZ: number = demoImages[0].body.meta.z || 0; 
+		const body: GenericPointer = {
+			pointer_type: "GenericPointer",
+			name: "SoilHeight Point",
+			meta: {
+				color: "green", 
+				created_by: "farm-designer",
+				type: "point",
+				...({ at_soil_level: "true" }),
+			},
+			x: demoPos.x || 0,
+			y: demoPos.y || 0,
+			z: demoPos.z || 0 - imageZ,
+			radius: 100,
+		};
+		setTimeout(() => this.props.dispatch(initSave("Point", body)), 2000);
+	 }
 
   render() {
     const wDEnvGet = (key: WDENVKey) => envGet(key, this.props.wDEnv);
@@ -156,9 +183,16 @@ export class RawDesignerPhotos
                 BooleanSetting.show_advanced_settings)}
               dispatch={this.props.dispatch} />
             : <div className={"farmware-form"}>
-              <button className={"fb-button green farmware-button pseudo-disabled"}>
+              {forceOnline()
+							? <button className={"fb-button green farmware-button"}
+							  onClick={this.handleMeasure}
+							>
+								{t("measure")}
+							</button>
+							
+							: <button className={"fb-button green farmware-button pseudo-disabled"}>
                 {t("measure")}
-              </button>
+              </button>}
             </div>}
         </Collapse>
         {DevSettings.futureFeaturesEnabled() &&
