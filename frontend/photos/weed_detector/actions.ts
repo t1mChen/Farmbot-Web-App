@@ -18,7 +18,6 @@ export const detectPlants = (coordScale: number) => () =>
     : (makeFakeWeeds(), popUp("Weed Detection", "Successfully detected weeds, buy a device for more usages!"));
 
 
-
 let weedPointersDemo: TaggedWeedPointer[] = []
 export function makeFakeWeeds() {
   const numFakeWeeds = getRandomIntInclusive(1,3);
@@ -49,8 +48,14 @@ export function fakeWeedDemo(): TaggedWeedPointer {
   });
 }
 
-// Function to clear all weeds from the screen
-export function clearWeed() {
+function getRandomIntInclusive(min: number, max: number) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+const clearWeedNotNullElement = window.document.getElementById("test")!;
+clearWeedNotNullElement.onclick = function clearWeeds({weedPointersDemo} :any) {
   // Get the number of weeds being cleared
   const numClearedWeeds = weedPointersDemo.length;
 
@@ -60,13 +65,6 @@ export function clearWeed() {
   // Show a pop-up message with the number of cleared weeds
   popUp("Weed Cleared", `Successfully cleared ${numClearedWeeds} weed(s)`);
 }
-
-function getRandomIntInclusive(min: number, max: number) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
   
 
 
