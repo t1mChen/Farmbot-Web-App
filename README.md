@@ -43,8 +43,14 @@ see ["releases"](https://github.com/Reesedog/Farmbot-Web-App/releases)
 and docs/HarvestX-Changelog-151023-100106.pdf
 
 
-## Traceability Matrix
+## Traceability Matrix for testing
 
-Checkout tests/ folder
+Checkout tests/HarvestX-Testing-201023-091017.pdf
 
-To be updated and uploaded
+The test cases are within the frontend/ under folder each relevant functions 
+The newly added / modified cases are
+* frontend/demo/__tests__/demo_iframe_test.tsx
+* frontend/photos/__tests__/photos_test.tsx
+* frontend/settings/fbos_settings/__tests__/ota_time_selector_test.tsx
+* frontend/devices/__tests__/actions_test.ts
+
