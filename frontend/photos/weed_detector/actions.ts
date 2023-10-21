@@ -54,8 +54,7 @@ function getRandomIntInclusive(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-const clearWeedNotNullElement = window.document.getElementById("test")!;
-clearWeedNotNullElement.onclick = function clearWeeds({weedPointersDemo} :any) {
+export function clearWeed() {
   // Get the number of weeds being cleared
   const numClearedWeeds = weedPointersDemo.length;
 
@@ -63,7 +62,7 @@ clearWeedNotNullElement.onclick = function clearWeeds({weedPointersDemo} :any) {
   weedPointersDemo = [];
 
   // Show a pop-up message with the number of cleared weeds
-  popUp("Weed Cleared", `Successfully cleared ${numClearedWeeds} weed(s)`);
+  popUp("Weed Cleared", `Successfully cleared ${numClearedWeeds} weeds`);
 }
   
 
