@@ -200,3 +200,4 @@ export function maybePopupAd2(){
 		}
 		ad_counter_2.count+=1;
 }
+
