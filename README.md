@@ -12,7 +12,7 @@ There are a lot of functions that are already built-in available using the FarmB
 
 ## Demo
 
-[Demo running on GCP](http://34.129.6.241:3000/demo)
+[Demo running on Google Cloud](http://34.129.6.241:3000/demo)
 
 ## Description of Key Algorithms / Framework
 
@@ -29,6 +29,7 @@ The presense of demo support framework effctively provides a connection for the 
 ## Features
 
 See [User Story](https://github.com/Reesedog/Farmbot-Web-App/blob/dev/docs/HarvestX-User%20Story-151023-093741.pdf)
+
 and [releases](https://github.com/Reesedog/Farmbot-Web-App/releases)
 
 ## Documents
@@ -38,24 +39,24 @@ Checkout docs/ folder
 * User Stories
 * Motivational Model
 * Non-functional Requirements
-* Architecture
+* Architecture descriptions and diagrams
 
 And tests/ folder
 * Test cases
 
 ## Installisation Guide
 
-Check [Deployment Guide](https://github.com/Reesedog/Farmbot-Web-App/blob/dev/docs/HarvestX-Deployment%20Guide-151023-095140.pdf)
+see [Deployment Guide](https://github.com/Reesedog/Farmbot-Web-App/blob/dev/docs/HarvestX-Deployment%20Guide-151023-095140.pdf)
 
 ## Changelog
 
 see [Releases](https://github.com/Reesedog/Farmbot-Web-App/releases)
 
-and [Change log](https://github.com/Reesedog/Farmbot-Web-App/blob/dev/docs/HarvestX-Changelog-151023-100106.pdf)
+and [Change log](https://github.com/Reesedog/Farmbot-Web-App/blob/dev/docs/HarvestX-Changelog-111123-093205.pdf)
 
 ## Traceability Matrix for testing
 
-Checkout (tests matrix)(https://github.com/Reesedog/Farmbot-Web-App/blob/dev/tests/HarvestX-Testing-201023-091017.pdf)
+see [tests matrix](https://github.com/Reesedog/Farmbot-Web-App/blob/dev/tests/HarvestX-Testing-201023-091017.pdf)
 
 The test cases are within the frontend/ under folder each relevant functions 
 The newly added / modified cases are
@@ -65,3 +66,5 @@ The newly added / modified cases are
 * frontend/devices/__tests__/actions_test.ts
 
 We have also run other existing test cases for purpose of integration testing
+
+
