@@ -160,14 +160,14 @@ export function checkUpdate() {
 export const ad_counter = {
 	count: 1,
 	// present ver ad
-	POPUP: 100000,
+	POPUP: 20,
 	adCount: 0,
 };
 
 export const ad_counter_2 = {
 	count: 1,
 	// present ver ad
-	POPUP: 1,
+	POPUP: 100000,
 	adCount: 0,
 };
 // pop up ad function
