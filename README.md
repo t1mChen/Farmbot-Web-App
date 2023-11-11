@@ -12,7 +12,9 @@ There are a lot of functions that are already built-in available using the FarmB
 
 ## Demo
 
-[Demo running on Google Cloud](http://34.129.6.241:3000/demo)
+[Demo running on Google Cloud](http://34.125.233.194:3000/demo)
+
+In order to meet the performance measure, we  have optimised our virtual machine, setting the CPU to be 8-core with 16GB RAM. We are using GCP to host our application since this is an extension on an open-sourced project that is available to be merged into the original branch.
 
 ## Description of Key Algorithms / Framework
 
