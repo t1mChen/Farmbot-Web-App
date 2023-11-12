@@ -142,6 +142,10 @@ export function demoCompare() {
 }
 
 // check if the state of 'image_flipper' is updated. 
+export var demoLabel = true;
+export function setLabel(label: boolean) {
+	demoLabel = label;
+}
 export var prevImages = cloneDeep(demoImages);
 var prevMode = isComparing;
 export function checkUpdate() {
@@ -187,17 +191,17 @@ export function maybePopupAd() {
 	ad_counter.count += 1;
 }
 
-export function maybePopupAd2(){
-	if(ad_counter_2.count!=null&&ad_counter_2.POPUP!=null&&ad_counter_2.adCount!=null){
-		if(ad_counter_2.count>=ad_counter_2.POPUP){
+export function maybePopupAd2() {
+	if (ad_counter_2.count != null && ad_counter_2.POPUP != null && ad_counter_2.adCount != null) {
+		if (ad_counter_2.count >= ad_counter_2.POPUP) {
 			// rotate through different ads 
-			createAdOnce(adMessages[ad_counter_2.adCount]);		
+			createAdOnce(adMessages[ad_counter_2.adCount]);
 			ad_counter_2.count = 0;
 			ad_counter_2.adCount += 1;
-			if(ad_counter_2.adCount>=adMessages.length)
-			ad_counter_2.adCount = 0;
-			}	
+			if (ad_counter_2.adCount >= adMessages.length)
+				ad_counter_2.adCount = 0;
 		}
-		ad_counter_2.count+=1;
+	}
+	ad_counter_2.count += 1;
 }
 
