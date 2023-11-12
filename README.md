@@ -70,3 +70,30 @@ The newly added / modified cases are
 We have also run other existing test cases for purpose of integration testing
 
 
+## Deployment
+**Setting Up GCP VM**
+
+1. Navigate to **Compute Engine** in the Google Cloud Platform (GCP) console.
+2. Start a new VM instance.
+3. For the machine type, select the E2 series and choose `e2-standard-4`.
+4. Select Ubuntu as the operating system.
+5. In the firewall settings, check the options to allow both HTTP and HTTPS traffic.
+6. On your local device, generate an SSH key using the command: 
+   `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
+7. In the VM instance settings, go to the "Advanced" options, then to the "Security" section.
+8. Add your SSH public key in the provided field.
+
+**Deploying Server**
+
+1. SSH into your GCP Virtual Machine Instance using the SSH key you generated.
+2. Follow the `ubuntu_example.sh` script for setting up the application environment.
+3. Execute the script and follow the guide provided within to install all necessary dependencies up to the point where you use `nano`.
+4. Update the `.env` file with parameters shared in your Slack workspace.
+5. Continue with the installation guide provided. If you encounter any warnings regarding PunyCode, you may ignore them.
+6. After completing the setup, wait for a notification indicating the build process is complete.
+7. Access your deployed application by visiting `http://<your_vm_ip_address>:3000` in your web browser.
+
+
+
+
+
