@@ -12,7 +12,9 @@ There are a lot of functions that are already built-in available using the FarmB
 
 ## Demo
 
-[Demo running on GCP](http://34.129.6.241:3000/demo)
+[Demo running on Google Cloud](http://34.125.233.194:3000/demo)
+
+In order to meet the performance measure, we  have optimised our virtual machine, setting the CPU to be 8-core with 16GB RAM. We are using GCP to host our application since this is an extension on an open-sourced project that is available to be merged into the original branch.
 
 ## Description of Key Algorithms / Framework
 
@@ -29,6 +31,7 @@ The presense of demo support framework effctively provides a connection for the 
 ## Features
 
 See [User Story](https://github.com/Reesedog/Farmbot-Web-App/blob/dev/docs/HarvestX-User%20Story-151023-093741.pdf)
+
 and [releases](https://github.com/Reesedog/Farmbot-Web-App/releases)
 
 ## Documents
@@ -38,24 +41,24 @@ Checkout docs/ folder
 * User Stories
 * Motivational Model
 * Non-functional Requirements
-* Architecture
+* Architecture descriptions and diagrams
 
 And tests/ folder
 * Test cases
 
 ## Installisation Guide
 
-Check [Deployment Guide](https://github.com/Reesedog/Farmbot-Web-App/blob/dev/docs/HarvestX-Deployment%20Guide-151023-095140.pdf)
+see [Deployment Guide](https://github.com/Reesedog/Farmbot-Web-App/blob/dev/docs/HarvestX-Deployment%20Guide-151023-095140.pdf)
 
 ## Changelog
 
 see [Releases](https://github.com/Reesedog/Farmbot-Web-App/releases)
 
-and [Change log](https://github.com/Reesedog/Farmbot-Web-App/blob/dev/docs/HarvestX-Changelog-151023-100106.pdf)
+and [Change log](https://github.com/Reesedog/Farmbot-Web-App/blob/dev/docs/HarvestX-Changelog-111123-093205.pdf)
 
 ## Traceability Matrix for testing
 
-Checkout (tests matrix)(https://github.com/Reesedog/Farmbot-Web-App/blob/dev/tests/HarvestX-Testing-201023-091017.pdf)
+see [tests matrix](https://github.com/Reesedog/Farmbot-Web-App/blob/dev/tests/HarvestX-Testing-201023-091017.pdf)
 
 The test cases are within the frontend/ under folder each relevant functions 
 The newly added / modified cases are
@@ -65,3 +68,30 @@ The newly added / modified cases are
 * frontend/devices/__tests__/actions_test.ts
 
 We have also run other existing test cases for purpose of integration testing
+
+## Deployment
+**Setting Up GCP VM**
+
+1. Navigate to **Compute Engine** in the Google Cloud Platform (GCP) console.
+2. Start a new VM instance.
+3. For the machine type, select the E2 series and choose `e2-standard-4`.
+4. Select Ubuntu as the operating system.
+5. In the firewall settings, check the options to allow both HTTP and HTTPS traffic.
+6. On your local device, generate an SSH key using the command: 
+   `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
+7. In the VM instance settings, go to the "Advanced" options, then to the "Security" section.
+8. Add your SSH public key in the provided field.
+
+**Deploying Server**
+
+1. SSH into your GCP Virtual Machine Instance using the SSH key you generated.
+2. Follow the `ubuntu_example.sh` script for setting up the application environment.
+3. Execute the script and follow the guide provided within to install all necessary dependencies up to the point where you use `nano`.
+4. Update the `.env` file with parameters shared in your Slack workspace.
+5. Continue with the installation guide provided. If you encounter any warnings regarding PunyCode, you may ignore them.
+6. After completing the setup, wait for a notification indicating the build process is complete.
+7. Access your deployed application by visiting `http://<your_vm_ip_address>:3000` in your web browser.
+
+
+
+
