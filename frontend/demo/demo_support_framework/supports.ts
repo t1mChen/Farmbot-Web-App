@@ -142,6 +142,10 @@ export function demoCompare() {
 }
 
 // check if the state of 'image_flipper' is updated. 
+export var demoLabel = true;
+export function setLabel(label: boolean) {
+	demoLabel = label;
+}
 export var prevImages = cloneDeep(demoImages);
 var prevMode = isComparing;
 export function checkUpdate() {
@@ -180,5 +184,3 @@ export function maybePopupAd() {
 	}
 	ad_counter.count += 1;
 }
-
-

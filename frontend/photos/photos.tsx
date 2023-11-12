@@ -32,7 +32,7 @@ import { DevSettings } from "../settings/dev/dev_support";
 import { forceOnline } from "../devices/must_be_online";
 import { initSave } from "../api/crud";
 import { moveMeasureDemo } from "../devices/actions";
-import { demoPos, demoImages, demoTakePhoto } from "../demo/demo_support_framework/supports";
+import { demoPos, demoImages, demoTakePhoto, demoLabel, setLabel } from "../demo/demo_support_framework/supports";
 import {GenericPointer } from "farmbot/dist/resources/api_resources";
 
 export class RawDesignerPhotos
@@ -73,7 +73,13 @@ export class RawDesignerPhotos
 			radius: 100,
 		};
 		setTimeout(() => this.props.dispatch(initSave("Point", body)), 2000);
-	 }
+		if (demoLabel) {
+		  setTimeout(() => this.props.dispatch({
+			  type: Actions.TOGGLE_SOIL_HEIGHT_LABELS, payload: undefined
+		  }), 2000);  
+			setLabel(false); 
+	  }
+	}
 
   render() {
     const wDEnvGet = (key: WDENVKey) => envGet(key, this.props.wDEnv);
