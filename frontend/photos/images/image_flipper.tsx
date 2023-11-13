@@ -8,7 +8,7 @@ import { FlipperImage } from "./flipper_image";
 import { selectImage, setShownMapImages } from "./actions";
 import { TaggedImage } from "farmbot";
 import { UUID } from "../../resources/interfaces";
-import { demoImages, demoCurrentImage, setCurrentImage, checkUpdate, compareList, isComparing } from "../../demo/demo_support_framework/supports";
+import { demoImages, demoCurrentImage, setCurrentImage, checkUpdate, compareList, isComparing, prevI, setPrevI } from "../../demo/demo_support_framework/supports";
 
 export const PLACEHOLDER_FARMBOT = "/placeholder_farmbot.jpg";
 export const PLACEHOLDER_FARMBOT_DARK = "/placeholder_farmbot_dark.jpg";
@@ -96,14 +96,15 @@ export class ImageFlipper extends
 		if (isComparing) { images = compareList }
     const multipleImages = images.length > 1;
     const dark = this.props.id === "fullscreen-flipper";
-		if (checkUpdate()) {
-			if (currentImage) {
-				const i = images.indexOf(currentImage); 
+    if (currentImage) {
+		  const index = images.indexOf(currentImage); 
+			if (index != prevI || checkUpdate()) {
+				setPrevI(index); 
 				this.setState({
-					disablePrev: i === 0, 
-					disableNext: i === images.length - 1
+					disablePrev: index === 0, 
+					disableNext: index === images.length - 1
 				})
-		  }
+			}
 		}
     return <div className={`image-flipper ${this.props.id}`} id={this.props.id}
       onKeyDown={e => {

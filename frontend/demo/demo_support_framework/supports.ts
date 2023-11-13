@@ -147,12 +147,9 @@ export function setLabel(label: boolean) {
 	demoLabel = label;
 }
 export var prevImages = cloneDeep(demoImages);
-var prevMode = isComparing;
+export var prevI = -1;
+export function setPrevI(i: number) { prevI = i }
 export function checkUpdate() {
-	if (prevMode != isComparing) {
-		prevMode = isComparing;
-		return true;
-	}
 	if (prevImages.length != demoImages.length) {
 		prevImages = cloneDeep(demoImages);
 		return true;
