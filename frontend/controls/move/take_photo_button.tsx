@@ -40,7 +40,7 @@ export class TakePhotoButton
     const inProgress = recentlyClicked && !done && botOnline;
     return <button
       className={[
-        inProgress ? "in-progress" : "fa fa-camera",
+        inProgress ? "in-progress" : "fa fa-camera green",
         "arrow-button fb-button",
         camDisabled.class,
       ].join(" ")}

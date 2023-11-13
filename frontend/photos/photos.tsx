@@ -10,7 +10,7 @@ import { CameraCalibration } from "./camera_calibration";
 import { WeedDetector } from "./weed_detector";
 import { WDENVKey } from "./remote_env/interfaces";
 import { t } from "../i18next_wrapper";
-import { Collapse } from "@blueprintjs/core";
+import { Collapse, Divider } from "@blueprintjs/core";
 import { ExpandableHeader, ToolTip } from "../ui";
 import { Actions, ToolTips } from "../constants";
 import { requestFarmwareUpdate } from "../farmware/farmware_info";
@@ -110,6 +110,7 @@ export class RawDesignerPhotos
           arduinoBusy={this.props.arduinoBusy}
           currentImageSize={this.props.currentImageSize}
           imageJobs={this.props.imageJobs} />
+				<Divider> </Divider>
         <ExpandableHeader
           expanded={photosPanelState.filter}
           title={t("Filter map photos")}
@@ -121,6 +122,7 @@ export class RawDesignerPhotos
         <Collapse isOpen={photosPanelState.filter}>
           <PhotoFilterSettings {...common} {...imageCommon} />
         </Collapse>
+				<Divider> </Divider>
         <ExpandableHeader
           expanded={photosPanelState.camera}
           title={t("Camera settings")}
@@ -133,6 +135,7 @@ export class RawDesignerPhotos
             version={this.props.versions["take-photo"] || ""}
             saveFarmwareEnv={this.props.saveFarmwareEnv} />
         </Collapse>
+				<Divider> </Divider>
         <ExpandableHeader
           expanded={!!photosPanelState.calibration}
           title={t("Camera calibration")}
@@ -157,6 +160,7 @@ export class RawDesignerPhotos
             V_HI={wDEnvGet("CAMERA_CALIBRATION_V_HI")}
             versions={this.props.versions} />
         </Collapse>
+				<Divider> </Divider>
         <ExpandableHeader
           expanded={!!photosPanelState.detection}
           title={t("Weed detection")}
@@ -170,6 +174,7 @@ export class RawDesignerPhotos
               BooleanSetting.show_advanced_settings)}
             saveFarmwareEnv={this.props.saveFarmwareEnv} />
         </Collapse>
+				<Divider> </Divider>
         <ExpandableHeader
           expanded={!!photosPanelState.measure}
           title={t("Measure soil height")}

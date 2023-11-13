@@ -104,7 +104,6 @@ export class ImageFlipper extends
 					disablePrev: index === 0, 
 					disableNext: index === images.length - 1
 				})
-				console.log("in"); 
 			}
 		}
     return <div className={`image-flipper ${this.props.id}`} id={this.props.id}
