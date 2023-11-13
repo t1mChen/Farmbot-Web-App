@@ -31,7 +31,7 @@ import {
 import { forceOnline } from "../../devices/must_be_online";
 import { 
 	demoTakePhoto, demoDeletePhoto, demoToggleRotation, currentRotation, demoCurrentImage, 
-	demoToggleCrop, demoRenderLabel, demoGetImageIndex, isComparing, demoCompare, compareList
+	demoToggleCrop, demoRenderLabel, demoGetImageIndex, isComparing, demoCompare, compareList, setCurrentImage
 } from "../../demo/demo_support_framework/supports";
 
 const NewPhotoButtons = (props: NewPhotoButtonsProps) => {
@@ -259,10 +259,12 @@ export class Photos extends React.Component<PhotosProps, PhotosComponentState> {
 			  <MarkedSlider 
 				  min={0}
 					max={compareList.length-1}
-					labelStepSize={Math.max(compareList.length, 2) - 1} 
+					labelStepSize={1} 
 					labelRenderer={demoRenderLabel}
 					value={demoGetImageIndex(demoCurrentImage)}
-					onChange={this.onSliderChange}
+					onChange={index => 
+						{index = compareList.length - 1 - index; 
+						  setCurrentImage(compareList[index])}}
 					items={compareList}
 					itemValue={demoGetImageIndex} />
 				: this.props.images.length > 1 &&
