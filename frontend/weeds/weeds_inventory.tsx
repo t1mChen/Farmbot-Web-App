@@ -35,6 +35,8 @@ import { createGroup } from "../point_groups/actions";
 import { GroupInventoryItem } from "../point_groups/group_inventory_item";
 import { push } from "../history";
 import { Path } from "../internal_urls";
+import { weedPointersDemo } from "../photos/weed_detector/actions";
+import { forceOnline } from "../devices/must_be_online";
 
 export interface WeedsProps {
   weeds: TaggedWeedPointer[];
@@ -51,7 +53,7 @@ interface WeedsState extends SortOptions {
 }
 
 export const mapStateToProps = (props: Everything): WeedsProps => ({
-  weeds: selectAllWeedPointers(props.resources.index),
+  weeds: forceOnline() ? weedPointersDemo : selectAllWeedPointers(props.resources.index),
   dispatch: props.dispatch,
   hoveredPoint: props.resources.consumers.farm_designer.hoveredPoint,
   getConfigValue: getWebAppConfigValue(() => props),
@@ -125,7 +127,7 @@ export const WeedsSection = (props: WeedsSectionProps) => {
       </EmptyStateWrapper>}
       {props.items.length == 0 && !noWeeds &&
         <p className={"no-weeds"}>{t(props.emptyStateText)}</p>}
-      {props.items.map(p => <WeedInventoryItem
+      {props.items.map(p => <WeedInventoryItem // important
         key={p.uuid}
         tpp={p}
         maxSize={maxSize}
