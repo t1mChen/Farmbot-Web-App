@@ -3,7 +3,7 @@ name: Deploy FarmBot Web API
 on:
   push:
     branches:
-      - main  # Trigger deployment when the main branch is updated
+      - dev  # Trigger deployment when the main branch is updated
 
 jobs:
   deploy:
