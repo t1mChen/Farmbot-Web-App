@@ -1,7 +1,17 @@
 require_relative "../app/models/transport.rb"
 require File.expand_path("../boot", __FILE__)
 require_relative "../app/lib/celery_script/cs_heap"
-require "rails/all"
+require "rails"
+
+# Pick the frameworks you want:
+require "active_model/railtie"
+require "active_job/railtie"
+require "action_controller/railtie"
+require "action_mailer/railtie"
+require "action_view/railtie"
+require "action_cable/engine"
+# ActiveRecord is excluded since we are skipping the database
+# require "active_record/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -14,6 +24,7 @@ module FarmBot
     REDIS_URL = ENV.fetch(REDIS_ENV_KEY, "redis://redis:6379/0")
     gcs_enabled =
       %w[ GOOGLE_CLOUD_KEYFILE_JSON GCS_PROJECT GCS_BUCKET ].all? { |s| ENV.key? s }
+
     config.lograge.enabled = true
     config.lograge.ignore_actions = [
       "Api::RmqUtilsController#user_action",
@@ -21,20 +32,18 @@ module FarmBot
       "Api::RmqUtilsController#resource_action",
       "Api::RmqUtilsController#topic_action",
     ]
+
     config.load_defaults 6.0
-    config.active_storage.service = gcs_enabled ?
-      :google : :local
+    config.active_storage.service = gcs_enabled ? :google : :local
     config.cache_store = :redis_cache_store, { url: REDIS_URL, ssl_params: { verify_mode: OpenSSL::SSL::VERIFY_NONE } }
     config.middleware.use Rack::Attack
-    config.active_record.schema_format = :sql
-    config.active_record.belongs_to_required_by_default = false
-    config.active_record.yaml_column_permitted_classes = [
-      ActiveSupport::HashWithIndifferentAccess,
-      Symbol,
-    ]
+    # Disable ActiveRecord-related settings
+    config.generators.orm = nil
     config.active_job.queue_adapter = :delayed_job
     config.action_dispatch.perform_deep_munge = false
     I18n.enforce_available_locales = false
+
+    # Configure URLs
     LOCAL_API_HOST = ENV.fetch("API_HOST", "parcel")
     PARCELJS_URL = "http://#{LOCAL_API_HOST}:3808"
     config.generators do |g|
@@ -44,6 +53,7 @@ module FarmBot
       g.helper_specs false
       g.fixture_replacement :factory_bot, :dir => "spec/factories"
     end
+
     config.autoload_paths << Rails.root.join("lib")
     config.autoload_paths << Rails.root.join("lib/sequence_migrations")
     config.middleware.insert_before ActionDispatch::Static, Rack::Cors do
@@ -57,6 +67,7 @@ module FarmBot
                  max_age: 0
       end
     end
+
     API_PORT = ENV["API_PORT"]
     Rails.application.routes.default_url_options[:host] = LOCAL_API_HOST
     Rails.application.routes.default_url_options[:port] = API_PORT || 3000
@@ -64,6 +75,7 @@ module FarmBot
     $API_URL = "//#{Rails.application.routes.default_url_options[:host]}:#{Rails.application.routes.default_url_options[:port]}"
     ALL_LOCAL_URIS = ([ENV["API_HOST"]] + (ENV["EXTRA_DOMAINS"] || "").split(","))
       .map { |x| x.present? ? "#{x}:#{ENV["API_PORT"]}" : nil }.compact
+
     SecureHeaders::Configuration.default do |config|
       config.hsts = "max-age=#{1.week.to_i}"
       # We need this off in dev mode otherwise email previews won't show up.
