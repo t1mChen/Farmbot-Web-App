@@ -7,11 +7,9 @@
 # Our eventual plan is to remove this into its    |
 # own repo and out of the main app.               |
 #=================================================+
-if ENV["ROLLBAR_ACCESS_TOKEN"]
+if Rails.env.production?
   Rollbar.configure do |config|
-    config.access_token = ENV["ROLLBAR_ACCESS_TOKEN"]
-    config.enabled = Rails.env.production? ? true : false
-    config.person_method = "current_device_id"
-    config.environment = (ENV["API_HOST"] || $API_URL || ENV["ROLLBAR_ENV"] || Rails.env)
+    config.enabled = false
   end
 end
+
