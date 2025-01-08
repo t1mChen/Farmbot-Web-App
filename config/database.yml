@@ -13,14 +13,18 @@ development:
   username: "farmbot"
   password: "password"
 
-# In production, you are not using a database, so just skip it or point it to a minimal config
+# In production, skip the database connection entirely
 production:
   <<: *default
+  # Skip database connection in production
   database: "farmbot_production" # Placeholder name, can be ignored
   host: <%= ENV['DB_HOST'] || 'localhost' %> # No real DB connection
   username: <%= ENV['DB_USERNAME'] || 'user' %> # No real DB credentials
   password: <%= ENV['DB_PASSWORD'] || 'password' %> # No real DB password
   pool: 0  # Disable connection pooling for production
+
+  # Disable ActiveRecord (optional - needed if skipping ActiveRecord entirely)
+  disconnected: true
 
 # If you still want to keep the test environment with minimal setup
 test:
