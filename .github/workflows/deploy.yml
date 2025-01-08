@@ -61,11 +61,6 @@ jobs:
           sudo docker compose up -d
         continue-on-error: true  # Ignore errors during the build and deploy process
 
-      # Step 5: Clean up orphaned containers
-      - name: Clean up orphaned containers
-        run: |
-          sudo docker-compose down --remove-orphans
-
       # Step 6: Verify Deployment
       - name: Verify Deployment
         run: |
