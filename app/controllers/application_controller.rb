@@ -1,10 +1,12 @@
 class ApplicationController < ActionController::Base
-  # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
   after_action :unset_current_device
 
-  # Rescue from database-related errors
-  rescue_from ActiveRecord::StatementInvalid, ActiveRecord::RecordNotFound, with: :handle_database_error
+  # Rescue from any database connection errors, including PG::ConnectionBad
+  rescue_from PG::ConnectionBad, ActiveRecord::StatementInvalid do |exception|
+    Rails.logger.warn "Ignoring database connection error: #{exception.message}"
+    # Optionally, return a generic response if necessary, otherwise let the app continue running
+  end
 
   def unset_current_device
     Device.send(:current=, nil)
@@ -20,15 +22,5 @@ class ApplicationController < ActionController::Base
 
   def current_device_id
     "device_#{current_device.try(:id) || 0}"
-  end
-
-  private
-
-  # Method to handle database errors gracefully
-  def handle_database_error(exception)
-    # Log the error to see it in logs (optional)
-    Rails.logger.warn "Database error occurred: #{exception.message}"
-    # Respond with a fallback message or status code
-    render json: { error: 'A database error occurred. Please try again later.' }, status: 500
   end
 end
