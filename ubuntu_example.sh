@@ -18,7 +18,7 @@ jobs:
       - name: Set up Ruby 3.2 and Node.js
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2'
+          ruby-version: '3.0.6'
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
