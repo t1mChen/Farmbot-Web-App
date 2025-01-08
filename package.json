@@ -7,7 +7,7 @@
     "node": "20.x",
     "npm": "10.x",
     "parcel": "2.x"
-  },
+  }, 
   "repository": {
     "type": "git",
     "url": "https://github.com/farmbot/farmbot-web-app"
