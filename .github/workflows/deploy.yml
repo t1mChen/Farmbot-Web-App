@@ -1,0 +1,56 @@
+name: Deploy FarmBot Web API
+
+on:
+  push:
+    branches:
+      - main  # Trigger deployment when the main branch is updated
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y ca-certificates curl gnupg lsb-release
+          sudo mkdir -p /etc/apt/keyrings
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
+          sudo apt update
+          sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+      - name: Build and Deploy FarmBot
+        run: |
+          # Clone repository (if not already checked out)
+          git clone https://github.com/FarmBot/Farmbot-Web-App --depth=5 --branch=main
+          cd Farmbot-Web-App
+
+          # Configure environment
+          cp example.env .env
+          sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=your_database_password/" .env
+          sed -i "s/SECRET_KEY_BASE=.*/SECRET_KEY_BASE=$(openssl rand -hex 64)/" .env
+
+          # Install dependencies
+          sudo docker compose run web gem install bundler
+          sudo docker compose run web bundle install
+          sudo docker compose run web npm install
+
+          # Setup database
+          sudo docker compose run web bundle exec rails db:create db:migrate
+          sudo docker compose run web rake keys:generate
+          sudo docker compose run web rake assets:precompile
+
+          # Start the server
+          sudo docker compose up -d
+
+      - name: Verify Deployment
+        run: |
+          curl -I http://localhost:3000
+
