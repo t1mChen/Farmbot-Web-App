@@ -34,10 +34,14 @@ jobs:
 
           # Configure environment without database setup
           cp example.env .env
-          sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=StrongPassw0rd!123/" .env
+          
+          # Removing or setting database-specific variables to defaults
+          sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=/" .env  # No database password
+          sed -i "s/DB_HOST=.*/DB_HOST=/" .env  # No database host
+          sed -i "s/DB_NAME=.*/DB_NAME=/" .env  # No database name
           sed -i "s/SECRET_KEY_BASE=.*/SECRET_KEY_BASE=$(openssl rand -hex 64)/" .env
           sed -i "s/ADMIN_PASSWORD=.*/ADMIN_PASSWORD=admin/" .env
-          sed -i "s/RABBITMQ_PASSWORD=.*/RABBITMQ_PASSWORD=admin/" .env # Ensure RabbitMQ can deploy
+          sed -i "s/RABBITMQ_PASSWORD=.*/RABBITMQ_PASSWORD=admin/" .env  # Ensure RabbitMQ can deploy
 
           # Install dependencies and precompile assets
           sudo docker compose run web bundle install
