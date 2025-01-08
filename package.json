@@ -24,7 +24,7 @@
     "sass-check": "./node_modules/sass/sass.js --no-source-map frontend/css/_index.scss:sass_index.log frontend/css/laptop_splash.scss:sass_splash.log",
     "translation-check": " ./node_modules/jshint/bin/jshint --config public/app-resources/languages/.config public/app-resources/languages/*.json",
     "linters": "npm run typecheck --cache=/tmp;X=$(($X+$?));npm run dev-typecheck --cache=/tmp;X=$(($X+$?));npm run eslint --cache=/tmp;X=$(($X+$?));npm run sass-lint --cache=/tmp;X=$(($X+$?));npm run sass-check --cache=/tmp;X=$(($X+$?));npm run translation-check --cache=/tmp;X=$(($X+$?));[ $X = 0 ]",
-    "build": "parcel build frontend/app.tsx --dist-dir build"
+    "build": "parcel build frontend/app.tsx --dist-dir build --no-cache"
   },
   "keywords": [
     "farmbot"
@@ -61,7 +61,7 @@
     "parcel": "2.9.3",
     "process": "0.11.10",
     "promise-timeout": "1.3.0",
-    "punycode": "2.3.0",
+    "punycode": "1.4.1",
     "querystring-es3": "0.2.1",
     "react": "18.2.0",
     "react-color": "2.19.3",
@@ -74,7 +74,7 @@
     "typescript": "5.2.2",
     "url": "0.11.3",
     "xterm": "5.3.0",
-    "math-intrinsics": "1.0.0"
+    "math-intrinsics": "1.1.0"
   },
   "devDependencies": {
     "@types/enzyme": "3.10.12",
@@ -109,7 +109,7 @@
     "tslint": "6.1.3"
   },
   "resolutions": {
-    "math-intrinsics": "^1.0.0"
+    "math-intrinsics": "1.1.0"
   }
 
 }
