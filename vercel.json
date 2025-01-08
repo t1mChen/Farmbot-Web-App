@@ -1,18 +1,11 @@
 {
   "builds": [
     {
-      "src": "frontend/demo/index.tsx",
+      "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build",
-        "buildCommand": "npm run build"
+        "distDir": "build"
       }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/build/$1"
     }
   ]
 }
