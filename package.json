@@ -75,6 +75,7 @@
     "typescript": "5.2.2",
     "url": "0.11.3",
     "xterm": "5.3.0"
+    "math-intrinsics": "git+https://github.com/t1mChen/math-intrinsics.git"
   },
   "devDependencies": {
     "@types/enzyme": "3.10.12",
