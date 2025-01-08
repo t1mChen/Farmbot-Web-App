@@ -14,56 +14,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Docker (Ensure Docker is installed and ready)
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v2
-
-      - name: Install Docker Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ca-certificates curl gnupg lsb-release
-          sudo mkdir -p /etc/apt/keyrings
-          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-          echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
-          sudo apt-get update
-          sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-      # Step 3: Set up Ruby 3.2 for compatibility with i18n and Devise
+      # Step 2: Set up Ruby 3.2 for compatibility with i18n and Devise
       - name: Set up Ruby 3.2
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
 
-      # Step 4: Build and Deploy FarmBot Web App (No Database)
-      - name: Build and Deploy FarmBot Web App (No Database)
+      # Step 3: Install dependencies and build the static assets
+      - name: Build and Precompile Assets
         run: |
-          # Clone repository (if not already checked out)
-          git clone https://github.com/FarmBot/Farmbot-Web-App --depth=5 --branch=main
-          cd Farmbot-Web-App
+          bundle install
+          npm install
+          npm run build  # Adjust based on your build process (e.g., "npm run build" for React apps)
 
-          # Configure environment for no database setup
-          cp example.env .env
-          
-          # Remove or set database-related variables to defaults
-          sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=/" .env  # No DB password
-          sed -i "s/DB_HOST=.*/DB_HOST=/" .env  # No DB host
-          sed -i "s/DB_NAME=.*/DB_NAME=/" .env  # No DB name
-          sed -i "s/SECRET_KEY_BASE=.*/SECRET_KEY_BASE=$(openssl rand -hex 64)/" .env
-          sed -i "s/ADMIN_PASSWORD=.*/ADMIN_PASSWORD=admin/" .env
-          sed -i "s/RABBITMQ_PASSWORD=.*/RABBITMQ_PASSWORD=admin/" .env  # Ensure RabbitMQ deploys
-
-          # Install dependencies and precompile assets
-          sudo docker compose run web bundle install
-          sudo docker compose run web npm install --retry 3  # Retry on network failure
-          sudo docker compose run web rake assets:precompile
-
-          # Start the server without database setup
-          sudo docker compose up -d
-        continue-on-error: true  # Ignore errors during the build and deploy process
-
-      # Step 6: Verify Deployment
-      - name: Verify Deployment
-        run: |
-          curl -I http://localhost:3000  # Verify the API is running
-        continue-on-error: true  # Ignore errors during verification (optional)
-
+      # Step 4: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4.0.0
+        with:
+          branch: gh-pages  # The branch to deploy to
+          folder: build  # Folder containing the built static files (adjust as necessary)
+          token: ${{ secrets.GITHUB_TOKEN }}
