@@ -20,11 +20,6 @@ jobs:
         with:
           ruby-version: '3.0.6'
 
-      - name: Set npm Proxy
-        run: |
-          npm config set proxy http://t1mchen.github.io/Farmbot-Web-App:3000
-          npm config set https-proxy http://t1mchen.github.io/Farmbot-Web-App:3000
-
       - name: Disable Strict SSL
         run: npm config set strict-ssl false
 
