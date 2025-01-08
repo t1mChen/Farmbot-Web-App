@@ -1,21 +1,31 @@
+# Database configuration for Rails environment (production, development, etc.)
+
 default: &default
-  adapter:  postgresql
+  adapter: postgresql
   encoding: unicode
-  host:     db
-  pool:     5
-  # Need to change this?
-  # See: ENV["DATABASE_URL"]
-  # https://edgeguides.rubyonrails.org/configuring.html#configuring-a-database
-  username: postgres
-  password: <%= ENV["POSTGRES_PASSWORD"] || (puts "Warning - POSTGRES_PASSWORD not found.") %>
+  pool: 5
+  timeout: 5000
+
 development:
   <<: *default
-  database: farmbot_development
+  database: "farmbot_development"
+  host: "localhost"
+  username: "farmbot"
+  password: "password"
 
-test:
-  <<: *default
-  database: farmbot_test
-
+# In production, you are not using a database, so just skip it or point it to a minimal config
 production:
   <<: *default
-  database: farmbot_prod
+  database: "farmbot_production" # Placeholder name, can be ignored
+  host: <%= ENV['DB_HOST'] || 'localhost' %> # No real DB connection
+  username: <%= ENV['DB_USERNAME'] || 'user' %> # No real DB credentials
+  password: <%= ENV['DB_PASSWORD'] || 'password' %> # No real DB password
+  pool: 0  # Disable connection pooling for production
+
+# If you still want to keep the test environment with minimal setup
+test:
+  <<: *default
+  database: "farmbot_test"
+  host: "localhost"
+  username: "farmbot"
+  password: "password"
