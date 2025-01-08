@@ -1,9 +1,9 @@
-name: Deploy FarmBot Web API (No Database)
+name: Deploy FarmBot Web API
 
 on:
   push:
     branches:
-      - dev  # Trigger deployment when the dev branch is updated
+      - dev  # Deploy when the dev branch is updated
 
 jobs:
   deploy:
@@ -14,26 +14,47 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Ruby 3.2 for compatibility with i18n and Devise
-      - name: Set up Ruby 3.2
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.0.6'
-
-      - name: Disable Strict SSL
-        run: npm config set strict-ssl false
-
-      # Step 3: Install dependencies and build the static assets
-      - name: Build and Precompile Assets
+      # Step 2: Set up Docker
+      - name: Install Docker
         run: |
-          bundle install
-          npm install
-          npm run build  # Adjust based on your build process (e.g., "npm run build" for React apps)
+          sudo apt update
+          sudo apt install ca-certificates curl gnupg lsb-release -y
+          sudo install -m 0755 -d /etc/apt/keyrings
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+          sudo chmod a+r /etc/apt/keyrings/docker.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+          sudo apt update
+          sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+          sudo docker compose version
 
-      # Step 4: Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4.7.2
-        with:
-          branch: gh-pages  # The branch to deploy to
-          folder: build  # Folder containing the built static files (adjust as necessary)
-          token: ${{ secrets.GITHUB_TOKEN }}
+      # Step 3: Set up environment variables
+      - name: Configure Environment
+        run: |
+          cp example.env .env
+          sed -i 's/DB_HOST=localhost/DB_HOST=your-database-host/' .env
+          sed -i 's/DB_USERNAME=root/DB_USERNAME=your-database-user/' .env
+          sed -i 's/DB_PASSWORD=password/DB_PASSWORD=your-database-password/' .env
+          sed -i 's/RAILS_ENV=development/RAILS_ENV=production/' .env
+
+      # Step 4: Install Ruby and Node.js Dependencies
+      - name: Install Dependencies
+        run: |
+          sudo docker compose run web gem install bundler
+          sudo docker compose run web bundle install
+          sudo docker compose run web npm install
+
+      # Step 5: Set up Database
+      - name: Configure Database
+        run: |
+          sudo docker compose run web bundle exec rails db:create db:migrate
+          sudo docker compose run web rake keys:generate
+
+      # Step 6: Precompile Assets
+      - name: Precompile Assets
+        run: |
+          sudo docker compose run web rake assets:precompile
+
+      # Step 7: Start the Application
+      - name: Start Application
+        run: |
+          sudo docker compose up -d
