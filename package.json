@@ -107,5 +107,9 @@
     "sass-lint": "1.13.1",
     "ts-jest": "29.1.1",
     "tslint": "6.1.3"
+  },
+  "resolutions": {
+    "math-intrinsics": "^1.0.0"
   }
+
 }
