@@ -2,10 +2,10 @@
   "builds": [
     {
       "src": "frontend/demo/index.tsx",
-      "use": "@vercel/node"
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
     }
-  ],
-  "ignore": [
-    "node_modules/math-intrinsics"
   ]
 }
