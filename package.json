@@ -111,6 +111,9 @@
   "alias": {
     "math-intrinsics": {
       "global": "{}"
+    },
+    "dunder-proto/get": {
+      "global": "{}"
     }
 }
 
