@@ -25,7 +25,7 @@
     "translation-check": " ./node_modules/jshint/bin/jshint --config public/app-resources/languages/.config public/app-resources/languages/*.json",
     "linters": "npm run typecheck --cache=/tmp;X=$(($X+$?));npm run dev-typecheck --cache=/tmp;X=$(($X+$?));npm run eslint --cache=/tmp;X=$(($X+$?));npm run sass-lint --cache=/tmp;X=$(($X+$?));npm run sass-check --cache=/tmp;X=$(($X+$?));npm run translation-check --cache=/tmp;X=$(($X+$?));[ $X = 0 ]",
     "start": "parcel frontend/index.html",
-    "build": "parcel build frontend/index.html --dist-dir build --no-cache --public-url ./ --no-scope-hoist"
+    "build": "parcel build frontend/index.html --dist-dir build --no-cache --public-url ./farmbot --no-scope-hoist"
   },
   "keywords": [
     "farmbot"
