@@ -12,7 +12,6 @@
     "type": "git",
     "url": "https://github.com/farmbot/farmbot-web-app"
   },
-  "main": "frontend/app.tsx",
   "scripts": {
     "coverage": "cat **/*lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-very-slow": "node --expose-gc ./node_modules/.bin/jest -i --colors --coverage",
