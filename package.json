@@ -12,6 +12,7 @@
     "type": "git",
     "url": "https://github.com/farmbot/farmbot-web-app"
   },
+  "main": "frontend/app.tsx",
   "scripts": {
     "coverage": "cat **/*lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-very-slow": "node --expose-gc ./node_modules/.bin/jest -i --colors --coverage",
@@ -24,6 +25,7 @@
     "sass-check": "./node_modules/sass/sass.js --no-source-map frontend/css/_index.scss:sass_index.log frontend/css/laptop_splash.scss:sass_splash.log",
     "translation-check": " ./node_modules/jshint/bin/jshint --config public/app-resources/languages/.config public/app-resources/languages/*.json",
     "linters": "npm run typecheck --cache=/tmp;X=$(($X+$?));npm run dev-typecheck --cache=/tmp;X=$(($X+$?));npm run eslint --cache=/tmp;X=$(($X+$?));npm run sass-lint --cache=/tmp;X=$(($X+$?));npm run sass-check --cache=/tmp;X=$(($X+$?));npm run translation-check --cache=/tmp;X=$(($X+$?));[ $X = 0 ]",
+    "start": "parcel frontend/index.html",
     "build": "parcel build index.html --dist-dir build --no-cache --no-scope-hoist"
   },
   "keywords": [
